@@ -1,0 +1,18 @@
+.t-dashboard {
+  // sass-lint:disable-block no-important
+  color: $color-black !important;
+
+  h1,
+  h2,
+  h3 {
+    color: $color-black !important;
+
+    a {
+      text-decoration: underline;
+    }
+  }
+
+  .navigation__image {
+    border: 2px solid $color-white;
+  }
+}

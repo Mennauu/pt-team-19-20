@@ -1,0 +1,109 @@
+{% from '../components/image/image.html' import image %}
+{% from '../components/intro/intro.html' import intro %}
+{% from '../components/match/match.html' import match %}
+{% from '../components/match/match-wrapper.html' import matchWrapper %}
+{% from '../components/form-elements/form-message/form-message.html' import message %}
+
+{% extends 'rev-layouts/default.html' %}
+
+{% block content %}
+
+  {% if firstvisit %}
+
+    <div class="o-container">
+
+      <div class="o-grid">
+
+          <section class="o-col-8--md u-pre-2--md u--max-width">
+
+            {% include '../components/form-settings/form-settings.html' %}
+
+          </section>
+
+        </div>
+
+    </div>
+
+    {% else %}
+
+    <div class="o-container-fluid">
+
+      <div class="o-grid">
+
+         <section class="o-col-8--md match__background match__background-extend">
+
+          {% call matchWrapper({
+            hook: 'single-match-wrapper'
+          }) %}
+
+            {% if possibleMatches | length %}
+
+              {% for person in possibleMatches %}
+
+                {%- if person.id 
+                    and person.avatar 
+                    and person.username 
+                    and person.age
+                    and person.level %}
+
+                  {{ match({
+                    id: person.id,
+                    image: person.avatar,
+                    username: person.username,
+                    age: person.age,
+                    level: person.level,
+                    options: true
+                  }) }}
+
+                {% endif -%}
+
+              {% endfor %}
+
+            {% else %}
+
+              <h3>I'm sorry, I can't find anyone! Maybe <a href="/profile">adjust your age range?</a></h3>
+
+            {% endif %}
+
+          {% endcall %}
+
+         </section>
+
+         <section class="o-col-4--md match__background">
+
+          {% call matchWrapper({
+            subtitle: 'Your matches',
+            multiple: true
+          }) %}
+
+            {% if matched | length %}
+
+              {% for person in matched %}
+
+                {{ match({
+                  id: person.id,
+                  image: person.avatar,
+                  username: person.username,
+                  age: person.age,
+                  level: person.level
+                }) }}
+              
+              {% endfor %}
+
+            {% else %}
+
+              <h4 class="match__none">Who shall be your first?</h4>
+
+            {% endif %}
+
+          {% endcall %}
+
+         </section>
+
+      </div>
+
+    </div>
+
+    {% endif %}
+
+{% endblock %}

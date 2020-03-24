@@ -1,0 +1,26 @@
+{% from '../components/card/card.html' import card %}
+{% from '../components/image/image.html' import image %}
+
+{% extends 'rev-layouts/default.html' %}
+
+{% block content %}
+
+  {% call card({center: true, padding: false, shadow: true}) %}
+
+  {{ image({
+      image: '/assets/images/couple2.jpeg',
+      srcset: '/assets/images/couple2@320w.webp 320w,
+              /assets/images/couple2@480w.webp 480w,
+              /assets/images/couple2@768w.webp 768w,
+              /assets/images/couple2@1024w.webp 1024w,
+              /assets/images/couple2@1280w.webp 1280w,
+              /assets/images/couple2@1440w.webp 1440w,
+              /assets/images/couple2@1920w.webp 1920w',
+      alt: 'Cute couple'
+  }) }}
+
+  {% include '../components/form-registration/form-registration.html' %}
+
+  {% endcall %}
+
+{% endblock %}

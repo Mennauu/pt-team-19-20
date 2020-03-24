@@ -1,0 +1,45 @@
+{% from '../image/image.html' import image %}
+
+<nav class="c-navigation">
+
+    {% for item in navigation %}
+
+        <{{ item.element or 'a' }} class="navigation__link
+           {%- if item.type == 'button' %} c-button
+           {%- if item.variant %}--{{ item.variant }}{% endif -%}{% endif -%}" 
+           {%- if item.href %} href={{ item.href }}{% endif -%}
+           {%- if item.ariaControls %} aria-controls={{ item.ariaControls }}{% endif -%}
+           {%- if item.ariaLabel %} aria-label={{ item.ariaLabel }} {% endif -%}
+           {%- if item.target %} target={{ item.target }} {% endif -%}
+           {%- if item.external %} rel="noopener" {% endif -%}>
+
+           {% if item.type == 'button' %}
+             <span class="button__label">{{ item.label }}</span>
+           {% else %}
+             {{ item.label }}
+           {% endif %}
+
+        </{{ item.element or 'a' }}>
+
+    {% endfor %}
+
+    {%- if username %}
+      <a class="navigation__link navigation__profile" href="/#profile">
+        <span class="navigation__label">{{ username }}</span>
+
+        {%- if avatar %}
+          <div class="navigation__image-wrapper {% if firstvisit %}navigation__image--is-generic{% endif %}">
+
+            {{ image({
+              image: avatar,
+              alt: 'avatar',
+              class: 'navigation__image'
+            }) }}
+
+          </div>
+        {% endif -%}
+
+      </a>
+    {% endif -%}
+    
+</nav>

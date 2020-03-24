@@ -1,0 +1,46 @@
+{% from '../logo/logo.html' import logo %}
+
+{% macro header( data ) %}
+
+    <header class="c-header 
+        {%- if data.shadow %} header--has-shadow{% endif -%}
+        {%- if data.class %} {{ data.class }}{% endif -%}" 
+        {%- if data.condenses %} condenses{% endif -%}
+        {%- if data.reveals %} reveals{% endif -%}
+        {%- if data.fixed %} fixed{% endif -%}
+        js-hook-header>
+
+        {% if data.visit %}
+            <div class="o-container">
+        {% endif %}
+
+            <div class="header__wrapper">
+
+                <a class="header__logo" href="/">
+
+                {% if data.image %}
+
+                    {{ logo({
+                        text: 'HTMLovers',
+                        image: data.image
+                    }) }}
+
+                {% endif %}
+
+                </a>
+
+                <div class="header__navigation">
+
+                     {{ caller() }}
+
+                </div>
+
+            </div>
+
+        {% if data.visit %}
+            </div>
+        {% endif %}
+
+    </header>
+
+{% endmacro %}

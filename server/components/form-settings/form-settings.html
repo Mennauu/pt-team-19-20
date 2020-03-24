@@ -1,0 +1,202 @@
+{% from '../form-elements/form/form.html' import form %}
+{% from '../form-elements/form-radio-wrapper/form-radio-wrapper.html' import radioWrapper %}
+{% from '../form-elements/form-input/form-input.html' import input %}
+{% from '../form-elements/form-message/form-message.html' import message %}
+{% from '../form-elements/form-notice/form-notice.html' import notice %}
+{% from '../form-elements/form-radio/form-radio.html' import radio %}
+{% from '../form-elements/form-select/form-select.html' import select %}
+{% from '../form-elements/form-range/form-range.html' import range %}
+{% from '../form-elements/form-upload/form-upload.html' import upload %}
+{% from '../form-elements/form-fieldset/form-fieldset.html' import fieldset %}
+{% from '../button/button.html' import button %}
+
+{% set errorClass = 'form__message--has-error' if error != '' %}
+
+{% call form({
+  method: 'POST',
+  enctype: 'multipart/form-data',
+  action: '/user-settings',
+  class: 'form__settings',
+  hook: 'form-settings',
+  title: 'Hello ' +  username + '.',
+  subtitle: 'Since this is your first time visiting you have to fill in some information.'
+}) %}
+
+{% call fieldset({ legend: 'Main personal information', sronly: true }) %}
+
+  {{ input({
+    name: 'name',
+    id: 'name',
+    label: 'Firstly, what is your real first name?',
+    hook: 'input-name',
+    autofocus: true,
+    class: 'form__item--is-visible form__item--first',
+    maxlength: '256',
+    placeholder: 'Robin'
+  }) }}
+
+  <div class="form__settings--pe" js-hook-form-settings-pe>
+
+  {{ input({
+    name: 'age',
+    id: 'age',
+    label: 'And what is your age?',
+    hook: 'input-age',
+    class: 'form__item--is-visible',
+    type: 'text',
+    placeholder: '26',
+    pattern: '\\d*',
+    maxlength: '2'
+  }) }}
+
+  {# {% call select({
+     name: 'age',
+    label: 'And what is your age?',
+    hook: 'input-age',
+    class: 'form__item--is-visible'
+  }) %}
+
+    <option value="">--</option>
+
+    {% for age in range(18, 120) %}
+      <option value="{{ age }}">{{ age }}</option>
+    {% endfor %}
+
+  {% endcall %} #}
+
+  {% call radioWrapper({
+    label: 'And your gender?',
+    hook: 'gender-form',
+    class: 'form__item--is-visible'
+  }) %}
+
+    {{ radio({
+      name: 'gender',
+      value: 'Male',
+      image: '/assets/images/male.png'
+    }) }}
+
+    {{ radio({
+      name: 'gender',
+      value: 'Female',
+      image: '/assets/images/female.png'
+    }) }}
+
+    {{ radio({
+      name: 'gender',
+      value: 'Any',
+      image: '/assets/images/gender.png'
+    }) }}
+  
+  {% endcall %}
+
+{% endcall %}
+
+{% call fieldset({ legend: 'Type of person you are looking for', sronly: true }) %}
+
+  {% call radioWrapper({
+    label: "Who are you looking for?",
+    hook: 'looking-form',
+    class: 'form__item--is-visible'
+  }) %}
+
+    {{ radio({
+      name: 'attraction',
+      value: 'Males',
+      image: '/assets/images/male.png'
+    }) }}
+
+    {{ radio({
+      name: 'attraction',
+      value: 'Females',
+      image: '/assets/images/female.png'
+    }) }}
+
+    {{ radio({
+      name: 'attraction',
+      value: 'Anyone',
+      image: '/assets/images/gender.png'
+    }) }}
+  
+  {% endcall %}
+
+  {{ range({
+    label: 'And at which age range?',
+    hook: 'input-age-range',
+    min: '18',
+    max: '99',
+    name: 'Age',
+    class: 'form__item--is-visible'
+  }) }}
+
+  {% if error %} 
+    {{ message({ 
+      text: error ,
+      hook: 'form-error',
+      class: errorClass
+    }) }} 
+  {% endif %}
+
+{% endcall %}
+
+{% call fieldset({ legend: 'Secondary personal information', sronly: true }) %}
+
+  {{ upload({
+    name: 'avatar',
+    id: 'avatar',
+    label: 'Almost there. How do you look?',
+    hook: 'input-avatar',
+    class: 'form__item--is-visible',
+    accept: 'image/*'
+  }) }}
+
+  {% call radioWrapper({
+    label: "Lastly, what is your coding level?",
+    hook: 'level-form',
+    class: 'form__item--is-visible'
+  }) %}
+
+    {{ radio({
+      name: 'level',
+      value: 'Noob',
+      image: '/assets/images/noob.png'
+    }) }}
+
+    {{ radio({
+      name: 'level',
+      value: 'Advanced',
+      image: '/assets/images/specialist.png'
+    }) }}
+
+    {{ radio({
+      name: 'level',
+      value: 'God',
+      image: '/assets/images/god.png'
+    }) }}
+  
+  {% endcall %}
+
+{% endcall %}
+
+  </div>
+
+  {{ button({ 
+    element: 'button',
+    label: 'Next',
+    variant: 'secondary',
+    arrowRight: true,
+    class: 'form__button form__settings-next u--is-hidden',
+    hook: 'next-button'
+  }) }}
+
+  {{ button({ 
+    element: 'button',
+    label: 'Submit and start journey',
+    variant: 'green',
+    size: 'large',
+    class: 'form__button form__settings-submit',
+    type: 'submit',
+    hook: 'submit-button'
+  }) }}
+
+{% endcall %}
