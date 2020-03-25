@@ -5,6 +5,7 @@ import { logout } from './get/logout.js'
 import { register } from './get/register.js'
 import { root } from './get/root.js'
 import { registerUser } from './post/registerUser.js'
+import { userLocation } from './post/userLocation.js'
 import { userMatches } from './post/userMatches.js'
 import { userSettings } from './post/userSettings.js'
 
@@ -20,3 +21,4 @@ exports.error = (req, res) => error(req, res)
 exports.registerUser = (req, res) => registerUser(req, res)
 exports.userSettings = (req, res) => userSettings(req, res)
 exports.userMatches = (req, res) => userMatches(req, res)
+exports.userLocation = (req, res) => userLocation(req, res)
