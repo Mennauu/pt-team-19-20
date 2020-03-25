@@ -1,0 +1,22 @@
+<form action="/user-location" method="POST" enctype="application/x-www-form-urlencoded" class="form_location">
+  <section id="locationInputTypes" class="form_location-inputs">
+    <input id="getCustomLocation" class="form_location-textInput" type="text" name="userInput" autocomplete="off"
+      placeholder="Enter a dutch city">
+    <input id="userLocation" type="hidden" name="userLocation">
+  </section>
+
+  <section class="form_location-message">
+  </section>
+  <div class="suggestionsWrapper">
+    <section id="locationSuggestions" class="suggestions">
+      <input type="radio" id="<%= item.woonplaats %>" name="userSuggestion" value="<%= item.woonplaats %>">
+      <label for="<%= item.woonplaats %>">
+      </label>
+    </section>
+  </div>
+
+  <input type="checkbox" id="removeLocation" class="form_location-remove" name="userSuggestion" value="removeLocation">
+  <label for="removeLocation" class="form_location-removeLabel">
+    Remove my location from database</label>
+  <button id="submitUserLocation" type="submit" class="form_location-submit">Submit</button>
+</form>
