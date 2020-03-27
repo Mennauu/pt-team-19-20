@@ -1,6 +1,7 @@
 const isImage = require('is-image')
 import validator from 'validator'
 
+import cityLocations from '../../data/cityLocations.json'
 import message from '../../data/messages.json'
 import User from '../../database/models/user.js'
 
