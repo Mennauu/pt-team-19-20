@@ -5,6 +5,14 @@ import cityLocations from '../../data/cityLocations.json'
 import message from '../../data/messages.json'
 import User from '../../database/models/user.js'
 
+function findExactCity(value) {
+  return cityLocations.find(entry => entry.woonplaats === value)
+}
+
+function findMatchingCityResults(value) {
+  return cityLocations.filter(item => item.woonplaats.includes(value))
+}
+
 export const userSettings = (req, res) => {
   const { name, age, gender, attraction, fromAge, toAge, level } = req.body
 
