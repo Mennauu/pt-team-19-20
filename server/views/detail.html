@@ -1,0 +1,50 @@
+{% from '../components/image/image.html' import image %}
+{% from '../components/intro/intro.html' import intro %}
+{% from '../components/match/match.html' import match %}
+{% from '../components/match/match-wrapper.html' import matchWrapper %}
+{% from '../components/form-elements/form-message/form-message.html' import message %}
+
+{% extends 'rev-layouts/default.html' %}
+
+{% block content %}
+
+    <div class="o-container-fluid">
+
+      <div class="o-grid">
+
+         <section class="o-col-8--md match__background match__background-extend">
+
+          {% call matchWrapper({
+            hook: 'single-match-wrapper'
+          }) %}
+
+            {%- if data %}
+
+                {%- if data.id 
+                    and data.avatar 
+                    and data.username 
+                    and data.age
+                    and data.level %}
+
+                  {{ match({
+                    id: data.id,
+                    image: data.avatar,
+                    username: data.username,
+                    age: data.age,
+                    level: data.level,
+                    options: false
+                  }) }}
+
+                {% endif -%}
+
+            {% endif -%}
+
+        {% endcall %}
+
+         </section>
+
+      </div>
+
+    </div>
+
+{% endblock %}
