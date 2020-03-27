@@ -7,6 +7,7 @@ import message from '../../data/messages.json'
 
 const JS_HOOK_NEXT_BUTTON = '[js-hook-next-button]'
 const JS_HOOK_INPUT_NAME = '[js-hook-input-name]'
+const JS_HOOK_INPUT_LOCATION = '[js-hook-input-location]'
 const JS_HOOK_INPUT_AGE = '[js-hook-input-age]'
 const JS_HOOK_INPUT_AGE_RANGE = '[js-hook-input-age-range]'
 const JS_HOOK_SUBMIT_BUTTON = '[js-hook-submit-button]'
@@ -32,6 +33,7 @@ class FormSettings {
   constructor(element) {
     this.form = element
     this.inputName = element.querySelector(JS_HOOK_INPUT_NAME)
+    this.inputLocation = element.querySelector(JS_HOOK_INPUT_LOCATION)
     this.inputAge = element.querySelector(JS_HOOK_INPUT_AGE)
     this.inputAgeRange = element.querySelector(JS_HOOK_INPUT_AGE_RANGE)
     this.levelForm = element.querySelector(JS_HOOK_LEVEL_FORM)
