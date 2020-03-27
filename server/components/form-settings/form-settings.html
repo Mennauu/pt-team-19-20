@@ -22,17 +22,21 @@
   subtitle: 'Since this is your first time visiting you have to fill in some information.'
 }) %}
 
-{% call fieldset({ legend: 'Main personal information', sronly: true }) %}
+{% call locationWrapper({
+    label: 'What is your location?',
+    hook: 'location-form',
+    class: 'form__item--is-visible'
+  }) %}
 
-  {{ input({
-    name: 'name',
-    id: 'name',
-    label: 'Firstly, what is your real first name?',
-    hook: 'input-name',
+{{ input({
+    name: 'inputLocation',
+    id: 'inputLocation',
+    label: 'Fill in a city name',
+    hook: 'input-location',
     autofocus: true,
-    class: 'form__item--is-visible form__item--first',
-    maxlength: '256',
-    placeholder: 'Robin'
+    class: 'form__item--is-visible display-block',
+    maxlength: '50',
+    placeholder: 'Amsterdam'
   }) }}
 
   <div class="form__settings--pe" js-hook-form-settings-pe>
