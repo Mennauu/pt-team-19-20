@@ -132,6 +132,7 @@ npm run dev
 <details>
   <summary>Show me the stack explanation!</summary>
 
+  <br>
 
 HTMLovers is a [server-side rendered](https://www.freecodecamp.org/news/what-exactly-is-client-side-rendering-and-hows-it-different-from-server-side-rendering-bd5c786b340d/) dating web application. You can create an account, setup your information and match with other users based on the given information.
 
