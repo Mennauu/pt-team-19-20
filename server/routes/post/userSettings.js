@@ -14,7 +14,17 @@ function findMatchingCityResults(value) {
 }
 
 export const userSettings = (req, res) => {
-  const { name, age, gender, attraction, fromAge, toAge, level } = req.body
+  const {
+    name,
+    age,
+    gender,
+    attraction,
+    fromAge,
+    toAge,
+    level,
+    inputLocation,
+    inputSuggestion,
+  } = req.body
 
   // Validate name length
   if (!validator.isByteLength(name, { min: 2, max: 256 })) {
