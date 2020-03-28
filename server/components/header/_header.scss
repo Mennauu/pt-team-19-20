@@ -57,6 +57,17 @@ $header-z-index: 2;
   .navigation__link {
     color: $color-black;
   }
+
+  .logo__text {
+    background: linear-gradient(
+      to right,
+      $color-yellow 0%,
+      $color-primary 50%,
+      $color-tertiary 100%
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
 }
 
 .header--is-visited {
