@@ -133,7 +133,21 @@ export const userSettings = (req, res) => {
 }
 
 const updateUserSettings = (req, res) => {
-  const { name, age, gender, attraction, fromAge, toAge, level } = req.body
+  const {
+    name,
+    age,
+    gender,
+    attraction,
+    fromAge,
+    toAge,
+    level,
+    inputLocation,
+    inputSuggestion,
+  } = req.body
+
+  const location = findExactCity(inputLocation).length
+    ? { lat: findExactCity(inputLocation).lat, long: findExactCity(inputLocation).long }
+    : { lat: findExactCity(inputSuggestion).lat, long: findExactCity(inputSuggestion).long }
 
   User.updateOne(
     { _id: req.session.passport.user },
@@ -147,6 +161,7 @@ const updateUserSettings = (req, res) => {
       toAge,
       avatar: `assets/uploads/${req.file.filename}`,
       level,
+      location: location,
       firstVisit: false,
     },
     (err, result) => {
