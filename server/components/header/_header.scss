@@ -59,12 +59,7 @@ $header-z-index: 2;
   }
 
   .logo__text {
-    background: linear-gradient(
-      to right,
-      $color-yellow 0%,
-      $color-primary 50%,
-      $color-tertiary 100%
-    );
+    background: $color-gradient;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
