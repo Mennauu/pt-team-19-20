@@ -9,6 +9,7 @@
         name="{{ data.name }}" 
         id="{{ data.value }}" 
         value="{{ data.value }}"
+        {% if data.checked === data.value %} checked {% endif %}
         {% if data.required %} required{% endif %}>
       
       {% if data.image %}
