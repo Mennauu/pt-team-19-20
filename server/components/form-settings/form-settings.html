@@ -1,5 +1,6 @@
 {% from '../form-elements/form/form.html' import form %}
 {% from '../form-elements/form-radio-wrapper/form-radio-wrapper.html' import radioWrapper %}
+{% from '../form-elements/form-location-wrapper/form-location-wrapper.html' import locationWrapper %}
 {% from '../form-elements/form-input/form-input.html' import input %}
 {% from '../form-elements/form-message/form-message.html' import message %}
 {% from '../form-elements/form-notice/form-notice.html' import notice %}
@@ -87,7 +88,8 @@
     type: 'text',
     placeholder: '26',
     pattern: '\\d*',
-    maxlength: '2'
+    maxlength: '2',
+    value: values.age
   }) }}
 
   {# {% call select({
@@ -114,19 +116,22 @@
     {{ radio({
       name: 'gender',
       value: 'Male',
-      image: '/assets/images/male.png'
+      image: '/assets/images/male.png',
+      checked: values.gender
     }) }}
 
     {{ radio({
       name: 'gender',
       value: 'Female',
-      image: '/assets/images/female.png'
+      image: '/assets/images/female.png',
+      checked: values.gender
     }) }}
 
     {{ radio({
       name: 'gender',
       value: 'Any',
-      image: '/assets/images/gender.png'
+      image: '/assets/images/gender.png',
+      checked: values.gender
     }) }}
   
   {% endcall %}
@@ -144,19 +149,22 @@
     {{ radio({
       name: 'attraction',
       value: 'Males',
-      image: '/assets/images/male.png'
+      image: '/assets/images/male.png',
+      checked: values.attraction
     }) }}
 
     {{ radio({
       name: 'attraction',
       value: 'Females',
-      image: '/assets/images/female.png'
+      image: '/assets/images/female.png',
+      checked: values.attraction
     }) }}
 
     {{ radio({
       name: 'attraction',
       value: 'Anyone',
-      image: '/assets/images/gender.png'
+      image: '/assets/images/gender.png',
+      checked: values.attraction
     }) }}
   
   {% endcall %}
@@ -167,7 +175,9 @@
     min: '18',
     max: '99',
     name: 'Age',
-    class: 'form__item--is-visible'
+    class: 'form__item--is-visible',
+    fromAge: values.fromAge,
+    toAge: values.toAge
   }) }}
 
   {% if error %} 
@@ -200,19 +210,22 @@
     {{ radio({
       name: 'level',
       value: 'Noob',
-      image: '/assets/images/noob.png'
+      image: '/assets/images/noob.png',
+      checked: values.level
     }) }}
 
     {{ radio({
       name: 'level',
       value: 'Advanced',
-      image: '/assets/images/specialist.png'
+      image: '/assets/images/specialist.png',
+      checked: values.level
     }) }}
 
     {{ radio({
       name: 'level',
       value: 'God',
-      image: '/assets/images/god.png'
+      image: '/assets/images/god.png',
+      checked: values.level
     }) }}
   
   {% endcall %}
