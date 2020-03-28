@@ -3,6 +3,7 @@ import validator from 'validator'
 
 import cityLocations from '../../data/cityLocations.json'
 import message from '../../data/messages.json'
+import dataNavigation from '../../data/navigation.json'
 import User from '../../database/models/user.js'
 
 function findExactCity(value) {
@@ -90,6 +91,42 @@ export const userSettings = (req, res) => {
   // Check if an attraction has been selected
   if (level === '') {
     return this.errorHandler(message.chooseLevel)
+  }
+
+  if (inputLocation && !inputSuggestion) {
+    // Check if location contains letters, spaces, dashes and high comma only
+    if (!validator.matches(inputLocation, /^[a-zA-Z\s'-]*$/)) {
+      req.flash('error', message.locationPattern)
+      return res.redirect('back')
+    }
+
+    // check if inputLocation is exact in cityLocations
+    if (!findExactCity(inputLocation)) {
+      const matchingResults = findMatchingCityResults(inputLocation)
+
+      // Check if location has no matches
+      if (!matchingResults.length) {
+        // return this.errorHandler(message.locationMatchFail)
+        req.flash('error', message.locationMatchFail)
+        return res.redirect('back')
+      } else {
+        const maxFiveMatchingResults = matchingResults.slice(0, 5)
+        const avatar = '/assets/images/avatar.svg'
+        const notificationMessage = req.flash('error')[0]
+
+        res.render('home', {
+          navigation: dataNavigation,
+          username: req.user.username,
+          avatar: req.user.avatar || avatar,
+          authenticated: true,
+          firstvisit: req.user.firstVisit,
+          name: req.user.name || req.user.username,
+          notificationMessage,
+          values: req.body,
+          locationSuggestions: maxFiveMatchingResults,
+        })
+      }
+    }
   }
 
   updateUserSettings(req, res)
