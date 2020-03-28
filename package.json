@@ -11,7 +11,7 @@
   "scripts": {
     "server": "node -r esm server/server.js",
     "server-nodemon": "nodemon -r esm server/server.js",
-    "build": "del build && npm run build-directories && npm run build-images && npm run build-js && npm run build-css && npm run prefix-css && npm run move-images && npm run move-fonts && npm run revision-js && npm run revision-css && npm run optimize-svgs",
+    "build": "del build && npm run build-directories && npm run build-js && npm run build-css && npm run prefix-css && npm run move-images && npm run move-fonts && npm run revision-js && npm run revision-css && npm run optimize-svgs",
     "start": "npm run server",
     "dev": "npm run kill-port & npm run server-nodemon & npm run watch & npm run lint-js -s & npm run lint-css & npm run build && npm run browser-sync",
     "browser-sync": "browser-sync start --proxy 'localhost:3000' --files 'server/build' 'server/views' 'server/components/**/*.html'",
