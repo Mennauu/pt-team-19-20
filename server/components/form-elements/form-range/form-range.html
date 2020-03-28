@@ -15,8 +15,7 @@
                 class="input__input" 
                 type="number" 
                 name="from{{ data.name }}" 
-                value="" 
-                min="{{ data.min }}" 
+                value="{{ data.fromAge }}"
                 max="{{ data.max }}"
                 placeholder="{{ data.min }}"
                 js-hook-range-from
@@ -27,8 +26,8 @@
                 class="input__input" 
                 type="number" 
                 name="to{{ data.name }}" 
-                value="" 
-                min="{{ data.min }}" 
+                value="{{ data.toAge }}"
+                min="{{ data.min }}"
                 max="{{ data.max }}"
                 placeholder="{{ data.max }}"
                 js-hook-range-to
