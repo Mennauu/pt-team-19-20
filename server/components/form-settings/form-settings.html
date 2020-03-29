@@ -42,12 +42,6 @@
 
     {% if locationSuggestions %}
 
-      {% call radioWrapper({
-        label: "suggested locations",
-        hook: 'looking-form',
-        class: 'form__item--is-visible'
-      }) %}
-
         {% for location in locationSuggestions %}
 
           {{ radio({
@@ -56,8 +50,6 @@
           }) }}
 
         {% endfor %}
-
-      {% endcall %}
 
     {% endif %}
 
