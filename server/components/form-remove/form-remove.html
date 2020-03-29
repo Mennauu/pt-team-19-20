@@ -1,0 +1,27 @@
+{% from '../form-elements/form/form.html' import form %}
+{% from '../form-elements/form-message/form-message.html' import message %}
+{% from '../form-elements/form-fieldset/form-fieldset.html' import fieldset %}
+{% from '../button/button.html' import button %}
+
+{% set errorClass = 'form__message--has-error' if error != '' %}
+
+{% call form({
+  method: 'POST',
+  action: '/removeMatch',
+  title: 'Remove'
+}) %}
+
+  {% call fieldset({ legend: 'Registration inputs', sronly: true }) %}
+
+    {{ button({ 
+      element: 'button',
+      label: 'Remove', 
+      type: 'submit',
+      variant: 'red',
+      value: data.id,
+      class: 'form__button'
+    }) }}
+
+  {% endcall %}
+
+{% endcall %}
