@@ -109,6 +109,7 @@ app.get('*', route.error)
 app.post('/register-user', route.registerUser)
 app.post('/user-settings', upload.single('avatar'), route.userSettings)
 app.post('/user-matches', route.userMatches)
+app.post('/remove-match', route.removeMatch)
 app.post(
   '/login-authenticate',
   auth.authenticate('local', {
