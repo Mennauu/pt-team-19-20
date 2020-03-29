@@ -9,6 +9,7 @@ export const detail = async (req, res) => {
       if (err) return res.redirect('back')
 
       if (results) {
+        console.log(req.user.matched)
         const matches = await User.find({ _id: { $in: req.user.matched } }, results => results)
         const matchName = matches.map(match => {
           const name = match.username
@@ -16,7 +17,7 @@ export const detail = async (req, res) => {
         })
         res.render('detail', {
           data: results,
-          removeButton: matchName[0] === username || !matchName === undefined ? true : false,
+          removeButton: matchName.includes(username) ? true : false,
           navigation: dataNavigation,
           username: req.user.username,
           avatar: req.user.avatar || avatar,
