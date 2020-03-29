@@ -23,22 +23,22 @@
   subtitle: 'Since this is your first time visiting you have to fill in some information.'
 }) %}
 
-{% call locationWrapper({
+  {% call locationWrapper({
     label: 'What is your location?',
     hook: 'location-form',
     class: 'form__item--is-visible'
   }) %}
 
-{{ input({
-    name: 'inputLocation',
-    id: 'inputLocation',
-    label: 'Fill in a city name',
-    hook: 'input-location',
-    autofocus: true,
-    class: 'form__item--is-visible display-block',
-    maxlength: '50',
-    placeholder: 'Amsterdam'
-  }) }}
+    {{ input({
+      name: 'inputLocation',
+      id: 'inputLocation',
+      label: 'Fill in a city name',
+      hook: 'input-location',
+      autofocus: true,
+      class: 'form__item--is-visible display-block no-margin-bottom',
+      maxlength: '50',
+      placeholder: 'Amsterdam'
+    }) }}
 
     {% if locationSuggestions %}
 
