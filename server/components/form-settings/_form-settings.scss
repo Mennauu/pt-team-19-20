@@ -64,6 +64,10 @@
   }
 }
 
+.form__settings .form__item.no-margin-bottom {
+  margin-bottom: 0;
+}
+
 .form__settings-next {
   position: fixed;
   bottom: $global-spacing-md;
