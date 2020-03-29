@@ -7,7 +7,7 @@
 
 {% call form({
   method: 'POST',
-  action: '/removeMatch',
+  action: '/remove-match',
   title: 'Remove'
 }) %}
 
@@ -19,6 +19,7 @@
       type: 'submit',
       variant: 'red',
       value: data.id,
+      name:'matchID',
       class: 'form__button'
     }) }}
 
