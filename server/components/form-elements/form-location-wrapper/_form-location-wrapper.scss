@@ -6,6 +6,7 @@
   margin-left: -$global-spacing-sm;
   margin-right: -$global-spacing-sm;
   padding-left: $global-spacing-sm;
+  flex-direction: column;
 
   &:after {
     content: '';
