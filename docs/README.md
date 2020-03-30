@@ -37,7 +37,7 @@ You can find a live version of the dating app here: <a href="#">Include link</a>
 
 - [Installation](#installation)
 - [Styleguide](#styleguide)
-- [Application](#application)
+- [Stack](#application)
   - [Templating](#templating)
     - [Views](#views)
     - [Components](#components)
@@ -127,7 +127,12 @@ npm run dev
 </details>
 
 
-## Application
+## Stack
+
+<details>
+  <summary>Show me the stack explanation!</summary>
+
+  <br>
 
 HTMLovers is a [server-side rendered](https://www.freecodecamp.org/news/what-exactly-is-client-side-rendering-and-hows-it-different-from-server-side-rendering-bd5c786b340d/) dating web application. You can create an account, setup your information and match with other users based on the given information.
 
@@ -315,14 +320,14 @@ Variables like `$global-spacing` and `$color-red` are globally defined variables
 All SCSS files are eventually compiled to one css file, which is compressed, revisioned, and minified, on save or build. More about that later!
 
 ### JavaScript
-I don't want to explain what JavaScript is, but I want to explain how I use JavaScript in this project. All JavaScript (files) being used are imported in a `main-es.js` file, like this:
+All JavaScript (files) being used are imported in a `main-es.js` file, like this:
 
 ```JavaScript
 import FormLogin from '@components/form-login'
 import moduleInit from '@utilities/module-init'
 ```
 
-I want to talk about the moduleInit, that's being imported. It's a script I didn't write myself, and I have no clue who actually wrote it. Someone from this company: [Dept](https://www.deptagency.com/nl-nl/), probably this guy: [The god of Webdevelopment](https://www.linkedin.com/in/adrianklingen/). Anyway, it reads the dom for elements. You can call it like this:
+moduleInit reads the dom for elements. You can call it like this:
 
 ```JavaScript
 moduleInit.sync('[js-hook-form-login]', FormLogin)
@@ -497,9 +502,9 @@ I won't go to much into detail here, since I wrote an article about it which you
 
 ### Linting
 
-I use [ESLint](https://www.npmjs.com/package/eslint) and [SASS-lint](https://github.com/sasstools/sass-lint) for JavaScript and SASS. Two respectable linters, which are very adjustable to your own taste. I created some real strict rules for my linters, which I use in every (web related) project I ever make. The lint errors will show each time you save a SASS file or JavaScript file, or when building the project.
+We use [ESLint](https://www.npmjs.com/package/eslint) and [SASS-lint](https://github.com/sasstools/sass-lint) for JavaScript and SASS. Two respectable linters, which are very adjustable to your own taste. Some real strict rules are created for the linters. The lint errors will show each time you save a SASS file or JavaScript file, or when building the project.
 
-Firstly, I use [Prettier](https://prettier.io/) to format my code on save. It's configured to solve most linting errors, if there are any formatting mistakes. For example, I told ESLint I don't want to have any semicolon at the end of a javascript declaration. So accordingly, I adjusted prettier to remove semicolons on save, to fix these errors.
+Firstly, [Prettier](https://prettier.io/) is used to format my code on save. It's configured to solve most linting errors, if there are any formatting mistakes. For example, ESLint is told that semicolons at the end of a javascript declaration aren't allowed. So accordingly, prettier is adjusted to remove semicolons on save, to fix these errors.
 
 <details>
   <summary>Show me your linter and prettier files!</summary>
@@ -617,7 +622,7 @@ trim_trailing_whitespace = false
 ### Setup and Build
 
 #### Setup
-[Express](https://www.npmjs.com/package/express) for the server. It's one of the best frameworks for node. I love writing imports in order to require modules, so I included [ESM](https://www.npmjs.com/package/esm) right away, ESM is a ECMAScript module loader and it allows you to write imports like this:
+[Express](https://www.npmjs.com/package/express) for the server. It's one of the best frameworks for node. [ESM](https://www.npmjs.com/package/esm) is also included. ESM is a ECMAScript module loader and it allows you to write imports like this:
 
 ```JavaScript
 import passport from 'passport'
@@ -853,6 +858,8 @@ The browser that support modules will just ignore the file with the nomodule att
 - [Alias](https://www.npmjs.com/package/@rollup/plugin-alias) to define aliases for file imports
 
 With JavaScript we do the same revisioning and filename replacement as we did for CSS, so another explanation is not needed.
+
+</details>
 
 ## Known bugs
 

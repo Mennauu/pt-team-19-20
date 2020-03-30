@@ -6,6 +6,7 @@ export const login = (req, res) => {
       success: req.flash('success'),
       error: req.flash('error'),
       firstvisit: true,
+      bodyClass: 't-login',
     })
   }
 }
