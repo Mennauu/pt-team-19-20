@@ -4,8 +4,6 @@ exports.serveContentTypes = (req, res, next) => {
   const extensionIndex = req.originalUrl.lastIndexOf('.')
   const extension = req.originalUrl.slice(extensionIndex)
 
-  console.log(encoding)
-
   if (encoding && encoding.includes('br')) {
     req.url = `${req.url}.br`
     res.set('Content-Encoding', 'br')
