@@ -11,6 +11,7 @@ import flash from 'express-flash'
 import session from 'express-session'
 import multer from 'multer'
 import nunjucks from 'nunjucks'
+import puppeteer from 'puppeteer'
 
 import { loginFail, loginSucces } from './data/messages.json'
 import auth from './middleware/authentication/auth.js'
@@ -21,6 +22,77 @@ const route = require('./routes/routeHandler.js')
 const upload = multer({ dest: 'server/assets/uploads/' })
 const app = express()
 const port = process.env.PORT || 3000
+
+// What is a better file/directory to place this in?
+async function getFestivalData() {
+  // Maybe we need to retreive this data from the database in the future...
+  const musicGenres = [
+    'deephouse',
+    'electro',
+    'hardcore',
+    'hardstyle',
+    'house',
+    'pop',
+    'rb',
+    'rock',
+    'techno',
+    'trance',
+    'urban',
+  ]
+
+  puppeteer.launch().then(async browser => {
+    const page = await browser.newPage()
+    let mergedData = []
+
+    // this has to be an oldschool for loop, because forEach, map and
+    for (let i = 0; i < musicGenres.length; i++) {
+      await page.goto(`https://festivalfans.nl/events/${musicGenres[i]}/`)
+
+      const data = await page.evaluate(() =>
+        [...document.querySelectorAll('div.ev2page script')].map(elem => elem.innerText),
+      )
+
+      const shortenedData = data.slice(0, 5)
+
+      const convertedData = shortenedData.map(entry => {
+        const parsedData = JSON.parse(entry)
+        const { name: festivalName, description, startDate } = parsedData
+        const { name: locationName } = parsedData.location
+        const { addressLocality: address } = parsedData.location.address
+        const { latitude, longitude } = parsedData.location.geo
+        const { price, priceCurrency } = parsedData.offers
+
+        // ISO date to timestamp https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/parse
+        const newData = {
+          genre: musicGenres[i],
+          data: {
+            festivalName,
+            description,
+            startDate: Date.parse(startDate),
+            location: {
+              locationName,
+              address,
+              latitude,
+              longitude,
+            },
+            price,
+            priceCurrency,
+          },
+        }
+
+        return newData
+      })
+      // I dond't get this working with the spread Syntax
+      mergedData.push(convertedData)
+      if (i + 1 === musicGenres.length) {
+        console.log(mergedData)
+        // MergedData had to be stored in the database
+      }
+    }
+    await browser.close()
+  })
+}
+getFestivalData()
 
 // Disable x-powered-by header
 app.disable('x-powered-by')
@@ -64,7 +136,7 @@ app.use(
   }),
 )
 
-/* Middleware that initialises Passport and changes 
+/* Middleware that initialises Passport and changes
   the (user) session id */
 app.use(auth.initialize())
 app.use(auth.session())
