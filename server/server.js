@@ -102,7 +102,7 @@ app.get('/login', route.login)
 app.get('/logout', route.logout)
 app.get('/register', route.register)
 app.get('/home', route.home)
-app.get('/:username', route.detail)
+app.get('/:id', route.profile)
 app.get('*', route.error)
 
 // POST routes

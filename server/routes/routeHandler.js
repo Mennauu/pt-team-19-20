@@ -1,8 +1,8 @@
-import { detail } from './get/detail.js'
 import { error } from './get/error.js'
 import { home } from './get/home.js'
 import { login } from './get/login.js'
 import { logout } from './get/logout.js'
+import { profile } from './get/profile.js'
 import { register } from './get/register.js'
 import { root } from './get/root.js'
 import { registerUser } from './post/registerUser.js'
@@ -16,7 +16,7 @@ exports.login = (req, res) => login(req, res)
 exports.logout = (req, res) => logout(req, res)
 exports.register = (req, res) => register(req, res)
 exports.home = (req, res) => home(req, res)
-exports.detail = (req, res) => detail(req, res)
+exports.profile = (req, res) => profile(req, res)
 exports.error = (req, res) => error(req, res)
 
 // POST
