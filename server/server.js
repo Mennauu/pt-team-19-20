@@ -6,6 +6,7 @@ import './database/database'
 
 import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'
+import cron from 'cron'
 import express from 'express'
 import flash from 'express-flash'
 import session from 'express-session'
@@ -92,7 +93,12 @@ async function getFestivalData() {
     await browser.close()
   })
 }
-getFestivalData()
+
+// Job starts when clock hits the 0 hour
+const job = cron.job('* 0 * * *', () => {
+  getFestivalData()
+})
+job.start()
 
 // Disable x-powered-by header
 app.disable('x-powered-by')
