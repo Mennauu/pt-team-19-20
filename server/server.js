@@ -41,6 +41,9 @@ app.use((req, res, next) => {
   next()
 })
 
+// Middleware for serving correct content type header
+app.get(['*.js', '*.css'], serve.serveContentTypes)
+
 // Brotli/GZIP HTML file compression
 app.use(
   shrinkRay({
@@ -90,11 +93,6 @@ app.use(
     etag: '',
   }),
 )
-
-// app.use('/data', express.static(__dirname + '/../server/data'))
-
-// Middleware for serving correct content type header
-app.get(['*.js', '*.css'], serve.serveContentTypes)
 
 // GET routes
 app.get('/', route.root)

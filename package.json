@@ -11,7 +11,7 @@
   "scripts": {
     "server": "node -r esm server/server.js",
     "server-nodemon": "nodemon -r esm server/server.js",
-    "build": "del build && npm run build-directories && npm run build-js && npm run build-css && npm run prefix-css && npm run move-images && npm run move-fonts && npm run revision-js && npm run revision-css && npm run optimize-svgs",
+    "build": "del build && npm run build-directories && npm run build-js && npm run build-css && npm run prefix-css && npm run move-images && npm run move-fonts && npm run revision-js && npm run revision-css && npm run compress-css && npm run compress-js && npm run optimize-svgs",
     "start": "npm run server",
     "dev": "npm run kill-port & npm run server-nodemon & npm run watch & npm run lint-js -s & npm run lint-css & npm run build && npm run browser-sync",
     "browser-sync": "browser-sync start --proxy 'localhost:3000' --files 'server/build' 'server/views' 'server/components/**/*.html'",
@@ -27,8 +27,10 @@
     "prefix-css": "postcss build/assets/css/styles.min.css -u autoprefixer --no-map --output build/assets/css/styles.min.css",
     "revision-js": "gulp --gulpfile server/middleware/revisioning/revision.js replace-js",
     "revision-css": "gulp --gulpfile server/middleware/revisioning/revision.js replace-css",
+    "compress-js": "bread-compressor 'build/assets/js/*.js'",
+    "compress-css": "bread-compressor 'build/assets/css/*.css'",
     "kill-port": "kill-port 3000",
-    "watch": "chokidar '**/*.js' -c 'npm run lint-js -s & npm run build-js && npm run revision-js' --ignore 'build/assets/js/*.js' --ignore 'server/server.js' --ignore 'server/routes/**/*' --ignore 'server/middleware/**/*' --ignore 'server/database/**/*'  --ignore 'node_modules/.cache/**/*' & chokidar '**/*.scss' -c 'npm run build-css & npm run lint-css && npm run revision-css' & chokidar 'server/assets/fonts/*' -c 'npm run move-fonts' --throttle 5000 & chokidar 'server/assets/images/*' -c 'npm run move-images' --throttle 5000"
+    "watch": "chokidar '**/*.js' -c 'npm run lint-js -s & npm run build-js && npm run revision-js && npm run compress-js' --ignore 'build/assets/js/*.js' --ignore 'server/server.js' --ignore 'server/routes/**/*' --ignore 'server/middleware/**/*' --ignore 'server/database/**/*'  --ignore 'node_modules/.cache/**/*' & chokidar '**/*.scss' -c 'npm run build-css & npm run lint-css && npm run revision-css && npm run compress-css' & chokidar 'server/assets/fonts/*' -c 'npm run move-fonts' --throttle 5000 & chokidar 'server/assets/images/*' -c 'npm run move-images' --throttle 5000"
   },
   "dependencies": {
     "@babel/runtime": "^7.8.7",
@@ -69,6 +71,7 @@
     "@typescript-eslint/parser": "^2.19.2",
     "autoprefixer": "^9.7.4",
     "babel-eslint": "^10.0.3",
+    "bread-compressor-cli": "^1.1.0",
     "browser-sync": "^2.26.7",
     "chokidar-cli": "^2.1.0",
     "connect-browser-sync": "^2.1.0",
@@ -89,6 +92,7 @@
     "kill-port": "^1.6.0",
     "make-dir-cli": "^2.0.0",
     "ncp": "^2.0.0",
+    "node-random-name": "^1.0.1",
     "node-sass-glob-importer": "^5.3.2",
     "nodemon": "^2.0.2",
     "postcss": "^7.0.27",
@@ -101,8 +105,7 @@
     "sass-lint": "^1.13.1",
     "select-random-file": "^1.1.0",
     "svgo": "^1.3.2",
-    "typescript": "^3.7.5",
-    "node-random-name": "^1.0.1"
+    "typescript": "^3.7.5"
   },
   "optionalDependencies": {
     "iltorb": "~2.0.0",
