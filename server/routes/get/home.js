@@ -40,6 +40,7 @@ export const home = async (req, res) => {
 
           res.render('home', {
             navigation: dataNavigation,
+            id: req.user._id,
             username: req.user.username,
             avatar: req.user.avatar || avatar,
             authenticated: true,
