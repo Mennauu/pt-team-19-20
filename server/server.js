@@ -46,8 +46,8 @@ async function getFestivalData() {
     let mergedData = []
 
     // this has to be an oldschool for loop, because forEach, map and
-    for (let i = 0; i < musicGenres.length; i++) {
-      await page.goto(`https://festivalfans.nl/events/${musicGenres[i]}/`)
+    for (const [i, genre] of musicGenres.entries()) {
+      await page.goto(`https://festivalfans.nl/events/${genre}/`)
 
       const data = await page.evaluate(() =>
         [...document.querySelectorAll('div.ev2page script')].map(elem => elem.innerText),
@@ -65,7 +65,7 @@ async function getFestivalData() {
 
         // ISO date to timestamp https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/parse
         const newData = {
-          genre: musicGenres[i],
+          genre: genre,
           data: {
             festivalName,
             description,
@@ -87,6 +87,8 @@ async function getFestivalData() {
       mergedData.push(convertedData)
       if (i + 1 === musicGenres.length) {
         console.log(mergedData)
+        console.log(convertedData)
+        console.log(Date.now())
         // MergedData had to be stored in the database
       }
     }
@@ -95,10 +97,10 @@ async function getFestivalData() {
 }
 
 // Job starts when clock hits the 0 hour, the 0 minute
-const job = cron.job('0 0 * * *', () => {
-  getFestivalData()
-})
-job.start()
+// const job = cron.job('0 0 * * *', () => {
+getFestivalData()
+// })
+// job.start()
 
 // Disable x-powered-by header
 app.disable('x-powered-by')
