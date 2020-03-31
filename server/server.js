@@ -94,8 +94,8 @@ async function getFestivalData() {
   })
 }
 
-// Job starts when clock hits the 0 hour
-const job = cron.job('* 0 * * *', () => {
+// Job starts when clock hits the 0 hour, the 0 minute
+const job = cron.job('0 0 * * *', () => {
   getFestivalData()
 })
 job.start()
