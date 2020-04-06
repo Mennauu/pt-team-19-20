@@ -3,10 +3,10 @@ require('dotenv').config()
 
 // Initialize database on server startup
 import './database/database'
+import './middleware/cron/events.js'
 
 import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'
-import cron from 'cron'
 import express from 'express'
 import flash from 'express-flash'
 import session from 'express-session'
@@ -15,7 +15,6 @@ import nunjucks from 'nunjucks'
 
 import { loginFail, loginSucces } from './data/messages.json'
 import auth from './middleware/authentication/auth.js'
-import getFestivalData from './middleware/cron/events.js'
 
 const shrinkRay = require('shrink-ray-current')
 const serve = require('./middleware/headers/serve.js')
@@ -23,12 +22,6 @@ const route = require('./routes/routeHandler.js')
 const upload = multer({ dest: 'server/assets/uploads/' })
 const app = express()
 const port = process.env.PORT || 3000
-
-// Job starts when clock hits the 0 hour, the 0 minute
-const job = cron.job('0 0 * * *', () => {
-  getFestivalData()
-})
-job.start()
 
 // Disable x-powered-by header
 app.disable('x-powered-by')
