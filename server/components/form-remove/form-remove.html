@@ -8,7 +8,8 @@
 {% call form({
   method: 'POST',
   action: '/remove-match',
-  title: 'Remove'
+  title: 'Remove',
+  hook: 'form-remove'
 }) %}
 
   {% call fieldset({ legend: 'Registration inputs', sronly: true }) %}
@@ -20,7 +21,8 @@
       variant: 'red',
       value: data.id,
       name:'matchID',
-      class: 'form__button'
+      class: 'form__button',
+      hook: 'form-remove-button'
     }) }}
 
   {% endcall %}

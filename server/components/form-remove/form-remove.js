@@ -1,294 +1,101 @@
-// import debounce from 'debounce'
-// import noUiSlider from 'nouislider'
-// import validator from 'validator'
-// import wNumb from 'wnumb'
-
 // import message from '../../data/messages.json'
 
-// const JS_HOOK_NEXT_BUTTON = '[js-hook-next-button]'
-// const JS_HOOK_INPUT_NAME = '[js-hook-input-name]'
-// const JS_HOOK_INPUT_AGE = '[js-hook-input-age]'
-// const JS_HOOK_INPUT_AGE_RANGE = '[js-hook-input-age-range]'
-// const JS_HOOK_SUBMIT_BUTTON = '[js-hook-submit-button]'
-// const JS_HOOK_LEVEL_FORM = '[js-hook-level-form]'
-// const JS_HOOK_INPUT_FILE = '[js-hook-input-file]'
-// const JS_HOOK_RANGE_FROM = '[js-hook-range-from]'
-// const JS_HOOK_RANGE_TO = '[js-hook-range-to]'
-// const JS_HOOK_FORM_SETTINGS_PE = '[js-hook-form-settings-pe]'
-// const JS_HOOK_NOTIFICATION = '[js-hook-notification]'
-// const JS_HOOK_NOTIFICATION_MESSAGE = '[js-hook-notification-message]'
+// const JS_HOOK_REMOVE = '[js-hook-form-remove]'
+// const JS_HOOK_FORM_MATCH_BUTTON = '[js-hook-form-remove-button]'
+// const JS_HOOK_OVERLAY = '[js-hook-overlay]'
+// const JS_HOOK_MODAL = '[js-hook-modal]'
+// const JS_HOOK_MODAL_CONTENT = '[js-hook-modal-content]'
 
-// const CLASS_INPUT_IS_VISIBLE = 'form__item--is-visible'
-// const CLASS_UTILITY_IS_INVISIBLE = 'u--is-hidden'
-// const CLASS_FORM_ITEM = 'form__item'
-// const CLASS_FORM_PE = 'form__settings--pe'
-// const CLASS_NOTIFICATION_IS_ACTIVE = 'notification--is-active'
+// const CLASS_IS_TRANSITIONING = 'remove--is-transitioning'
+// const CLASS_OVERLAY_IS_ACTIVE = 'overlay--is-active'
+// const CLASS_MODAL_IS_ACTIVE = 'modal--is-active'
 
-// const RADIO_INPUT_GENDER = 'gender'
-// const RADIO_INPUT_ATTRACTION = 'attraction'
-// const RADIO_INPUT_LEVEL = 'level'
-
-// class FormSettings {
+// class Remove {
 //   constructor(element) {
 //     this.form = element
-//     this.inputName = element.querySelector(JS_HOOK_INPUT_NAME)
-//     this.inputAge = element.querySelector(JS_HOOK_INPUT_AGE)
-//     this.inputAgeRange = element.querySelector(JS_HOOK_INPUT_AGE_RANGE)
-//     this.levelForm = element.querySelector(JS_HOOK_LEVEL_FORM)
-//     this.fileUpload = element.querySelector(JS_HOOK_INPUT_FILE)
-//     this.inputRangeFrom = element.querySelector(JS_HOOK_RANGE_FROM)
-//     this.inputRangeTo = element.querySelector(JS_HOOK_RANGE_TO)
-//     this.pe = element.querySelector(JS_HOOK_FORM_SETTINGS_PE)
-//     this.notification = document.querySelector(JS_HOOK_NOTIFICATION)
-//     this.notificationMessage = document.querySelector(JS_HOOK_NOTIFICATION_MESSAGE)
-//     this.genderInputs = document.getElementsByName(RADIO_INPUT_GENDER)
-//     this.attractionInputs = document.getElementsByName(RADIO_INPUT_ATTRACTION)
-//     this.levelInputs = document.getElementsByName(RADIO_INPUT_LEVEL)
+//     this.button = document.querySelector(JS_HOOK_FORM_MATCH_BUTTON)
+//     this.overlay = document.querySelector(JS_HOOK_OVERLAY)
+//     this.modal = document.querySelector(JS_HOOK_MODAL)
+//     this.modalContent = document.querySelector(JS_HOOK_MODAL_CONTENT)
 
-//     this.inputRanges = [this.inputRangeFrom, this.inputRangeTo]
-//     this.formItems = [...element.querySelectorAll('.' + CLASS_FORM_ITEM)]
-
-//     this.nextButton = document.querySelector(JS_HOOK_NEXT_BUTTON)
-//     this.submitButton = document.querySelector(JS_HOOK_SUBMIT_BUTTON)
-
-//     this.initialLoadEvents()
 //     this.bindEvents()
 //   }
 
-//   initialLoadEvents() {
-//     this.nextButton.classList.remove(CLASS_UTILITY_IS_INVISIBLE)
-//     this.submitButton.classList.add(CLASS_UTILITY_IS_INVISIBLE)
-//     this.pe.classList.remove(CLASS_FORM_PE)
-
-//     this.inputRangeFrom.setAttribute('readonly', '')
-//     this.inputRangeTo.setAttribute('readonly', '')
-
-//     if (this.inputName.value.length < 2) {
-//       this.disableButton(this.nextButton)
-//     }
-
-//     for (const [i, item] of this.formItems.entries()) {
-//       if (i !== 0) item.classList.remove(CLASS_INPUT_IS_VISIBLE)
-//     }
-
-//     noUiSlider.create(this.inputAgeRange, {
-//       start: [18, 30],
-//       connect: true,
-//       tooltips: true,
-//       step: 1,
-//       range: {
-//         min: 18,
-//         max: 99,
-//       },
-//       format: wNumb({
-//         decimals: 0,
-//       }),
-//     })
-//   }
-
 //   bindEvents() {
-//     this.form.addEventListener('submit', () => this.validationEvents(event))
-//     this.nextButton.addEventListener('click', () => this.formHandler())
-//     this.inputName.addEventListener(
-//       'keydown',
-//       debounce(element => {
-//         this.enableButton(element)
-//       }, 200),
-//     )
-//     this.inputAge.addEventListener(
-//       'keydown',
-//       debounce(element => {
-//         this.enableButton(element)
-//       }, 200),
-//     )
-//     this.fileUpload.addEventListener('change', () => this.formHandler())
-
-//     this.inputAgeRange.noUiSlider.on('update', (values, handle) =>
-//       this.updateRangeInputValues(values, handle),
-//     )
+//     this.button.addEventListener('click', () => this.formHandler(event))
 //   }
 
-//   formHandler() {
-//     this.closeNotification()
-
-//     for (const [i, item] of this.formItems.entries()) {
-//       if (!item.classList.contains(CLASS_INPUT_IS_VISIBLE)) {
-//         const itemInput = getInputFromParent(item)
-
-//         item.classList.add(CLASS_INPUT_IS_VISIBLE)
-
-//         if (itemInput) itemInput.focus()
-
-//         if (i === 1) {
-//           setTimeout(() => {
-//             if (!this.nextButton.hasAttribute('disabled')) {
-//               this.nextButton.setAttribute('disabled', '')
-//             }
-//           }, 0)
-//         }
-
-//         if (item.classList.contains('c-radio')) {
-//           const itemLabels = getInputsFromParent(item)
-
-//           this.nextButton.setAttribute('disabled', '')
-
-//           for (const label of itemLabels) {
-//             label.addEventListener('click', () => this.formHandler())
-//           }
-//         } else if (item.classList.contains('input--file')) {
-//           this.nextButton.setAttribute('disabled', '')
-//         } else {
-//           if (this.nextButton.hasAttribute('disabled')) {
-//             this.nextButton.removeAttribute('disabled')
-//           }
-//         }
-
-//         if (i === this.formItems.length - 1) {
-//           const itemLabels = getInputsFromParent(item)
-
-//           this.nextButton.classList.add(CLASS_UTILITY_IS_INVISIBLE)
-
-//           if (this.submitButton.classList.contains(CLASS_UTILITY_IS_INVISIBLE)) {
-//             for (const label of itemLabels) {
-//               label.addEventListener('click', () => this.enableSubmit())
-//             }
-//           }
-//         }
-
-//         return this.scrollToBottom()
-//       }
-//     }
-//   }
-
-//   updateRangeInputValues(values, handle) {
-//     this.inputRanges[handle].value = values[handle]
-//   }
-
-//   scrollToBottom() {
-//     window.scrollTo({ left: 0, top: document.body.scrollHeight, behavior: 'smooth' })
-//   }
-
-//   enableButton(element) {
-//     const elementLength = element.srcElement.value.length
-
-//     if (elementLength >= 2 && this.nextButton.hasAttribute('disabled')) {
-//       this.nextButton.removeAttribute('disabled')
-//     }
-
-//     if (elementLength < 2 && !this.nextButton.hasAttribute('disabled')) {
-//       this.disableButton()
-//     }
-//   }
-
-//   disableButton(element) {
-//     element.setAttribute('disabled', '')
-//   }
-
-//   enableSubmit() {
-//     this.submitButton.classList.remove(CLASS_UTILITY_IS_INVISIBLE)
-
-//     return this.scrollToBottom()
-//   }
-
-//   validationEvents(event) {
+//   formHandler(event) {
 //     event.preventDefault()
 
-//     const name = this.inputName.value
-//     const age = this.inputAge.value
+//     const buttonName = event.target.parentNode.name
+//       ? event.target.parentNode.name
+//       : event.target.name
+//     const buttonValue = event.target.parentNode.value
+//       ? event.target.parentNode.value
+//       : event.target.value
 
-//     // Validate name length
-//     if (!validator.isByteLength(name, { min: 2, max: 256 })) {
-//       return this.errorHandler(message.nameCheck)
-//     }
+//     this.postRequest(buttonName, buttonValue)
+//   }
 
-//     // Check if name contains only letters
-//     if (!validator.isAlpha(name)) {
-//       return this.errorHandler(message.nameLetters)
-//     }
+//   async postRequest(key, value) {
+//     try {
+//       const values = { [key]: value }
 
-//     // Validate age length
-//     if (!validator.isByteLength(age, { min: 2, max: 2 })) {
-//       return this.errorHandler(message.ageCheck)
-//     }
-
-//     // Check if age contains only letters
-//     if (!validator.isNumeric(age)) {
-//       return this.errorHandler(message.ageLetters)
-//     }
-
-//     // Check if one (gender) radio button is checked
-//     if (this.genderInputs) {
-//       const trueCount = this.getRadioCount(this.genderInputs)
-
-//       if (trueCount !== 1) {
-//         return this.errorHandler(message.chooseGender)
+//       const config = {
+//         method: 'POST',
+//         headers: {
+//           Accept: 'application/json',
+//           'Content-Type': 'application/json',
+//           'X-Requested-With': 'XMLHttpRequest',
+//         },
+//         body: JSON.stringify(values),
 //       }
-//     }
 
-//     // Check if one (attraction) radio button is checked
-//     if (this.attractionInputs) {
-//       const trueCount = this.getRadioCount(this.attractionInputs)
+//       const response = await fetch('/remove-match', config)
+//       const data = await response.json()
+//       console.log(data)
 
-//       if (trueCount !== 1) {
-//         return this.errorHandler(message.chooseAttraction)
-//       }
-//     }
+//       if (data) {
+//         const element = this.form.closest(JS_HOOK_REMOVE)
 
-//     // Check if upload contains a valid image
-//     if (this.fileUpload) {
-//       if (this.fileUpload.files[0]) {
-//         const file = this.fileUpload.files[0]
-//         const pattern = /image-*/
+//         if (!data.match) {
+//           const html = `
+//             <h2 class="modal__title">So sad thing didn't work out..</h2>
+//             <p class="modal__description">Hopefully the someone else will be your soulmate! You succesfully removed ${data.username}</p>
+//             <div class="modal__image-wrapper">
+//              <img class="modal__image" src="${data.avatar}" alt="${data.username}">
+//             </div>
+//             <a class="c-button--primary modal__button-close" href="/home" aria-label="Close modalbox">
+//               <span class="button__label">Okay!</span>
+//             </a>
+//           `
 
-//         if (!file.type.match(pattern)) {
-//           return this.errorHandler(message.setRealImage)
+//           while (this.modalContent.firstChild)
+//             this.modalContent.removeChild(this.modalContent.firstChild)
+
+//           this.modalContent.insertAdjacentHTML('afterbegin', html)
+//           this.showModal()
 //         }
-//       } else {
-//         return this.errorHandler(message.setAvatar)
+
+//         element.classList.add(CLASS_IS_TRANSITIONING)
+//         element.addEventListener('transitionend', () => {
+//           element.remove()
+
+//           if (!this.matchWrapper.children.length) {
+//             this.matchWrapper.insertAdjacentHTML('afterbegin', message.noResults)
+//           }
+//         })
 //       }
-//     }
-
-//     // Check if one (level) radio button is checked
-//     if (this.levelInputs) {
-//       const trueCount = this.getRadioCount(this.levelInputs)
-
-//       if (trueCount !== 1) {
-//         return this.errorHandler(message.chooseLevel)
-//       }
-//     }
-
-//     this.submitForm()
-//   }
-
-//   errorHandler(message) {
-//     this.notificationMessage.textContent = message
-//     this.notification.classList.add(CLASS_NOTIFICATION_IS_ACTIVE)
-//   }
-
-//   closeNotification() {
-//     if (this.notification.classList.contains(CLASS_NOTIFICATION_IS_ACTIVE)) {
-//       this.notification.classList.remove(CLASS_NOTIFICATION_IS_ACTIVE)
+//     } catch (err) {
+//       console.log(err)
 //     }
 //   }
 
-//   getRadioCount(element) {
-//     let trueCount = 0
-
-//     for (const input of element) {
-//       if (input.checked === true) {
-//         trueCount++
-//       }
-//     }
-
-//     return trueCount
-//   }
-
-//   submitForm() {
-//     this.form.submit()
+//   showModal() {
+//     this.overlay.classList.add(CLASS_OVERLAY_IS_ACTIVE)
+//     this.modal.classList.add(CLASS_MODAL_IS_ACTIVE)
 //   }
 // }
 
-// const getInputFromParent = element => element.querySelector('input')
-// const getInputsFromParent = element => [...element.querySelectorAll('input')]
-
-// export default FormSettings
+// export default Remove
