@@ -1,13 +1,26 @@
 import cron from 'cron'
 import puppeteer from 'puppeteer'
 
+import Festival from '../../database/models/festival.js'
+
 // Job starts when clock hits the 0 hour, the 0 minute
 const job = cron.job('0 0 * * *', () => {
-  getFestivalData()
+  setFestivalData()
 })
+
+Festival.findOne().then(latestFestival => {
+  const latestFestivalUpdate = Number(latestFestival.timestamp)
+  const day = 1000 * 60 * 60 * 24
+  const isRecentlyUpdated = Date.now() - day < latestFestivalUpdate
+
+  if (!isRecentlyUpdated) {
+    setFestivalData()
+  }
+})
+
 export default job.start()
 
-async function getFestivalData() {
+async function setFestivalData() {
   // Maybe we need to retreive this data from the database in the future...
   const musicGenres = [
     'deephouse',
@@ -37,7 +50,7 @@ async function getFestivalData() {
 
         const shortenedData = data.slice(0, 5)
 
-        const convertedData = shortenedData.map(entry => {
+        shortenedData.forEach(entry => {
           const parsedData = JSON.parse(entry)
           const { name: festivalName, description, startDate } = parsedData
           const { name: locationName } = parsedData.location
@@ -63,15 +76,20 @@ async function getFestivalData() {
             },
           }
 
-          return newData
+          mergedData.push(newData)
+          return
         })
-        // I dond't get this working with the spread Syntax
-        mergedData.push(convertedData)
+
+        // when done with all loops
         if (i + 1 === musicGenres.length) {
-          console.log(mergedData)
-          console.log(convertedData)
-          console.log(Date.now())
-          // MergedData had to be stored in the database
+          const timestamp = Date.now()
+
+          // delete all old festivals
+          Festival.collection.drop()
+          const newFestival = new Festival({ timestamp, festivals: mergedData })
+
+          // update new festivals
+          newFestival.save()
         }
       }
       await browser.close()
