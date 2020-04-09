@@ -14,6 +14,8 @@ const JS_HOOK_LEVEL_FORM = '[js-hook-level-form]'
 const JS_HOOK_INPUT_FILE = '[js-hook-input-file]'
 const JS_HOOK_RANGE_FROM = '[js-hook-range-from]'
 const JS_HOOK_RANGE_TO = '[js-hook-range-to]'
+const JS_HOOK_INPUT_SONG = '[js-hook-input-song]'
+const JS_HOOK_INPUT_ARTIST = '[js-hook-input-arist]'
 const JS_HOOK_FORM_SETTINGS_PE = '[js-hook-form-settings-pe]'
 const JS_HOOK_NOTIFICATION = '[js-hook-notification]'
 const JS_HOOK_NOTIFICATION_MESSAGE = '[js-hook-notification-message]'
@@ -27,6 +29,7 @@ const CLASS_NOTIFICATION_IS_ACTIVE = 'notification--is-active'
 const RADIO_INPUT_GENDER = 'gender'
 const RADIO_INPUT_ATTRACTION = 'attraction'
 const RADIO_INPUT_LEVEL = 'level'
+const RADIO_INPUT_GENRE = 'genre'
 
 class FormSettings {
   constructor(element) {
@@ -44,6 +47,9 @@ class FormSettings {
     this.genderInputs = document.getElementsByName(RADIO_INPUT_GENDER)
     this.attractionInputs = document.getElementsByName(RADIO_INPUT_ATTRACTION)
     this.levelInputs = document.getElementsByName(RADIO_INPUT_LEVEL)
+    this.inputSong = document.querySelector(JS_HOOK_INPUT_SONG)
+    this.inputArtist = document.querySelector(JS_HOOK_INPUT_ARTIST)
+    this.genreInputs = document.getElementsByName(RADIO_INPUT_GENRE)
 
     this.inputRanges = [this.inputRangeFrom, this.inputRangeTo]
     this.formItems = [...element.querySelectorAll('.' + CLASS_FORM_ITEM)]
@@ -245,15 +251,6 @@ class FormSettings {
         }
       } else {
         return this.errorHandler(message.setAvatar)
-      }
-    }
-
-    // Check if one (level) radio button is checked
-    if (this.levelInputs) {
-      const trueCount = this.getRadioCount(this.levelInputs)
-
-      if (trueCount !== 1) {
-        return this.errorHandler(message.chooseLevel)
       }
     }
 

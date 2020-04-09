@@ -150,6 +150,85 @@
     accept: 'image/*'
   }) }}
 
+  {{ input({
+    name: 'song',
+    id: 'song',
+    label: 'One more step, what is your favorite song?',
+    placeholder: 'The A Team',
+    hook: 'input-song'
+  }) }}
+
+  {{ input({
+    name: 'artist',
+    id: 'artist',
+    label: 'By which artist?',
+    placeholder: 'Ed Sheeran',
+    hook: 'input-artist'
+  }) }}
+
+  {% call radioWrapper({
+    label: 'Which genre does it belong to?',
+    hook: 'genre-form',
+    class: 'form__item--is-visible'
+  }) %}
+
+  {{ radio({
+    name: 'genre',
+    value: 'Deephouse'
+  }) }}
+
+  {{ radio({
+    name: 'genre',
+    value: 'Electro'
+  }) }}
+
+  {{ radio({
+    name: 'genre',
+    value: 'Hardcore'
+  }) }}
+
+  {{ radio({
+    name: 'genre',
+    value: 'Hardstyle'
+  }) }}
+
+  {{ radio({
+    name: 'genre',
+    value: 'House'
+  }) }}
+
+  {{ radio({
+    name: 'genre',
+    value: 'Pop'
+  }) }}
+
+  {{ radio({
+    name: 'genre',
+    value: 'R&B'
+  }) }}
+
+  {{ radio({
+    name: 'genre',
+    value: 'Rock'
+  }) }}
+
+  {{ radio({
+    name: 'genre',
+    value: 'Techno'
+  }) }}
+
+  {{ radio({
+    name: 'genre',
+    value: 'Trance'
+  }) }}
+
+  {{ radio({
+    name: 'genre',
+    value: 'Urban'
+  }) }}
+
+  {% endcall %}
+
   {% endcall %}
 
 </div>
