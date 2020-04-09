@@ -3,6 +3,7 @@ require('dotenv').config()
 
 // Initialize database on server startup
 import './database/database'
+import './middleware/cron/events.js'
 
 import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'
@@ -64,7 +65,7 @@ app.use(
   }),
 )
 
-/* Middleware that initialises Passport and changes 
+/* Middleware that initialises Passport and changes
   the (user) session id */
 app.use(auth.initialize())
 app.use(auth.session())
