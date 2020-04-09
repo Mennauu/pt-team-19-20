@@ -3,6 +3,7 @@ require('dotenv').config()
 
 // Initialize database on server startup
 import './database/database'
+import './middleware/cron/events.js'
 
 import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'
@@ -41,6 +42,9 @@ app.use((req, res, next) => {
   next()
 })
 
+// Middleware for serving correct content type header
+app.get(['*.js', '*.css'], serve.serveContentTypes)
+
 // Brotli/GZIP HTML file compression
 app.use(
   shrinkRay({
@@ -64,7 +68,7 @@ app.use(
   }),
 )
 
-/* Middleware that initialises Passport and changes 
+/* Middleware that initialises Passport and changes
   the (user) session id */
 app.use(auth.initialize())
 app.use(auth.session())
@@ -90,11 +94,6 @@ app.use(
     etag: '',
   }),
 )
-
-// app.use('/data', express.static(__dirname + '/../server/data'))
-
-// Middleware for serving correct content type header
-app.get(['*.js', '*.css'], serve.serveContentTypes)
 
 // GET routes
 app.get('/', route.root)
