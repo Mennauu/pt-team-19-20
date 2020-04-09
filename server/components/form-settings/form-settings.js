@@ -28,7 +28,6 @@ const CLASS_NOTIFICATION_IS_ACTIVE = 'notification--is-active'
 
 const RADIO_INPUT_GENDER = 'gender'
 const RADIO_INPUT_ATTRACTION = 'attraction'
-const RADIO_INPUT_LEVEL = 'level'
 const RADIO_INPUT_GENRE = 'genre'
 
 class FormSettings {
@@ -46,7 +45,6 @@ class FormSettings {
     this.notificationMessage = document.querySelector(JS_HOOK_NOTIFICATION_MESSAGE)
     this.genderInputs = document.getElementsByName(RADIO_INPUT_GENDER)
     this.attractionInputs = document.getElementsByName(RADIO_INPUT_ATTRACTION)
-    this.levelInputs = document.getElementsByName(RADIO_INPUT_LEVEL)
     this.inputSong = document.querySelector(JS_HOOK_INPUT_SONG)
     this.inputArtist = document.querySelector(JS_HOOK_INPUT_ARTIST)
     this.genreInputs = document.getElementsByName(RADIO_INPUT_GENRE)
