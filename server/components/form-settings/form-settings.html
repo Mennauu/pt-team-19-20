@@ -24,7 +24,7 @@
 
 {% call fieldset({ legend: 'Main personal information', sronly: true }) %}
 
-  {{ input({
+{{ input({
     name: 'name',
     id: 'name',
     label: 'Firstly, what is your real first name?',
@@ -35,7 +35,7 @@
     placeholder: 'Robin'
   }) }}
 
-  <div class="form__settings--pe" js-hook-form-settings-pe>
+<div class="form__settings--pe" js-hook-form-settings-pe>
 
   {{ input({
     name: 'age',
@@ -70,29 +70,29 @@
     class: 'form__item--is-visible'
   }) %}
 
-    {{ radio({
+  {{ radio({
       name: 'gender',
       value: 'Male',
       image: '/assets/images/male.png'
     }) }}
 
-    {{ radio({
+  {{ radio({
       name: 'gender',
       value: 'Female',
       image: '/assets/images/female.png'
     }) }}
 
-    {{ radio({
+  {{ radio({
       name: 'gender',
       value: 'Any',
       image: '/assets/images/gender.png'
     }) }}
-  
+
   {% endcall %}
 
-{% endcall %}
+  {% endcall %}
 
-{% call fieldset({ legend: 'Type of person you are looking for', sronly: true }) %}
+  {% call fieldset({ legend: 'Type of person you are looking for', sronly: true }) %}
 
   {% call radioWrapper({
     label: "Who are you looking for?",
@@ -100,24 +100,24 @@
     class: 'form__item--is-visible'
   }) %}
 
-    {{ radio({
+  {{ radio({
       name: 'attraction',
       value: 'Males',
       image: '/assets/images/male.png'
     }) }}
 
-    {{ radio({
+  {{ radio({
       name: 'attraction',
       value: 'Females',
       image: '/assets/images/female.png'
     }) }}
 
-    {{ radio({
+  {{ radio({
       name: 'attraction',
       value: 'Anyone',
       image: '/assets/images/gender.png'
     }) }}
-  
+
   {% endcall %}
 
   {{ range({
@@ -129,17 +129,17 @@
     class: 'form__item--is-visible'
   }) }}
 
-  {% if error %} 
-    {{ message({ 
+  {% if error %}
+  {{ message({ 
       text: error ,
       hook: 'form-error',
       class: errorClass
-    }) }} 
+    }) }}
   {% endif %}
 
-{% endcall %}
+  {% endcall %}
 
-{% call fieldset({ legend: 'Secondary personal information', sronly: true }) %}
+  {% call fieldset({ legend: 'Secondary personal information', sronly: true }) %}
 
   {{ upload({
     name: 'avatar',
@@ -150,37 +150,11 @@
     accept: 'image/*'
   }) }}
 
-  {% call radioWrapper({
-    label: "Lastly, what is your coding level?",
-    hook: 'level-form',
-    class: 'form__item--is-visible'
-  }) %}
-
-    {{ radio({
-      name: 'level',
-      value: 'Noob',
-      image: '/assets/images/noob.png'
-    }) }}
-
-    {{ radio({
-      name: 'level',
-      value: 'Advanced',
-      image: '/assets/images/specialist.png'
-    }) }}
-
-    {{ radio({
-      name: 'level',
-      value: 'God',
-      image: '/assets/images/god.png'
-    }) }}
-  
   {% endcall %}
 
-{% endcall %}
+</div>
 
-  </div>
-
-  {{ button({ 
+{{ button({ 
     element: 'button',
     label: 'Next',
     variant: 'secondary',
@@ -189,7 +163,7 @@
     hook: 'next-button'
   }) }}
 
-  {{ button({ 
+{{ button({ 
     element: 'button',
     label: 'Submit and start journey',
     variant: 'green',
