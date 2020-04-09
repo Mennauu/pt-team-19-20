@@ -166,66 +166,23 @@
     hook: 'input-artist'
   }) }}
 
-  {% call radioWrapper({
+  {% call select({
     label: 'Which genre does it belong to?',
     hook: 'genre-form',
     class: 'form__item--is-visible'
   }) %}
 
-  {{ radio({
-      name: 'genre',
-      value: 'Deephouse'
-    }) }}
-
-  <!-- {{ radio({
-    name: 'genre',
-    value: 'Electro'
-  }) }}
-
-  {{ radio({
-    name: 'genre',
-    value: 'Hardcore'
-  }) }}
-
-  {{ radio({
-    name: 'genre',
-    value: 'Hardstyle'
-  }) }}
-
-  {{ radio({
-    name: 'genre',
-    value: 'House'
-  }) }}
-
-  {{ radio({
-    name: 'genre',
-    value: 'Pop'
-  }) }}
-
-  {{ radio({
-    name: 'genre',
-    value: 'R&B'
-  }) }}
-
-  {{ radio({
-    name: 'genre',
-    value: 'Rock'
-  }) }}
-
-  {{ radio({
-    name: 'genre',
-    value: 'Techno'
-  }) }}
-
-  {{ radio({
-    name: 'genre',
-    value: 'Trance'
-  }) }}
-
-  {{ radio({
-    name: 'genre',
-    value: 'Urban'
-  }) }} -->
+  <option name='genre' value='deephouse'>Deephouse</option>
+  <option name='genre' value='hardcore'>Hardcore</option>
+  <option name='genre' value='hardstyle'>Hardstyle</option>
+  <option name='genre' value='techno'>Techno</option>
+  <option name='genre' value='r&b'>R&amp;B</option>
+  <option name='genre' value='pop'>Pop</option>
+  <option name='genre' value='rock'>Rock</option>
+  <option name='genre' value='trance'>Trance</option>
+  <option name='genre' value='electro'>Electro</option>
+  <option name='genre' value='house'>House</option>
+  <option name='genre' value='urban'>Urban</option>
 
   {% endcall %}
 
