@@ -9,18 +9,18 @@ const job = cron.job('0 0 * * *', () => {
 })
 
 Festival.findOne().then(latestFestival => {
-  const latestFestivalUpdate = Number(latestFestival.timestamp)
+  const latestFestivalUpdate = latestFestival ? Number(latestFestival.timestamp) : null
   const day = 1000 * 60 * 60 * 24
   const isRecentlyUpdated = Date.now() - day < latestFestivalUpdate
 
-  if (!isRecentlyUpdated) {
+  if (!isRecentlyUpdated || !latestFestivalUpdate) {
     setFestivalData()
   }
 })
 
 export default job.start()
 
-async function setFestivalData() {
+const setFestivalData = async () => {
   // Maybe we need to retreive this data from the database in the future...
   const musicGenres = [
     'deephouse',
