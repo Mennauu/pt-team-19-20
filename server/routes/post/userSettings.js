@@ -111,17 +111,12 @@ export const userSettings = (req, res) => {
         return res.redirect('back')
       } else {
         const maxFiveMatchingResults = matchingResults.slice(0, 5)
-        const avatar = '/assets/images/avatar.svg'
-        const notificationMessage = req.flash('error')[0]
 
         res.render('home', {
           navigation: dataNavigation,
           username: req.user.username,
-          avatar: req.user.avatar || avatar,
           authenticated: true,
           firstvisit: req.user.firstVisit,
-          name: req.user.name || req.user.username,
-          notificationMessage,
           values: req.body,
           locationSuggestions: maxFiveMatchingResults,
         })
