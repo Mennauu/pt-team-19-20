@@ -25,15 +25,15 @@
 {% call fieldset({ legend: 'Main personal information', sronly: true }) %}
 
 {{ input({
-    name: 'name',
-    id: 'name',
-    label: 'Firstly, what is your real first name?',
-    hook: 'input-name',
-    autofocus: true,
-    class: 'form__item--is-visible form__item--first',
-    maxlength: '256',
-    placeholder: 'Robin'
-  }) }}
+  name: 'name',
+  id: 'name',
+  label: 'Firstly, what is your real first name?',
+  hook: 'input-name',
+  autofocus: true,
+  class: 'form__item--is-visible form__item--first',
+  maxlength: '256',
+  placeholder: 'Robin'
+}) }}
 
 <div class="form__settings--pe" js-hook-form-settings-pe>
 
