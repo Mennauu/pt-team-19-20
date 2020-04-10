@@ -17,25 +17,24 @@ export const removeMatch = (req, res) => {
           (err, done) => {
             if (err) return res.redirect('back')
             if (done) {
-              res.redirect('home')
-              // User.findOne({ _id: matchID }, (err, person) => {
-              //   if (req.xhr) {
-              //     if (err) res.redirect('back')
-              //     if (person) {
-              //       const clientData = {
-              //         username: person.username,
-              //         avatar: person.avatar,
-              //         match: false,
-              //       }
-              //       return res.send(JSON.stringify(clientData))
-              //     }
-              //   } else {
-              //     req.flash('matchedavatar', person.avatar)
-              //     req.flash('matcheduser', person.username)
-
-              //     return res.redirect('back')
-              //   }
-              // })
+              User.findOne({ _id: matchID }, (err, person) => {
+                if (req.xhr) {
+                  if (err) res.redirect('back')
+                  if (person) {
+                    const clientData = {
+                      username: person.username,
+                      avatar: person.avatar,
+                      match: false,
+                    }
+                    return res.send(JSON.stringify(clientData))
+                  }
+                } else {
+                  req.flash('matchedavatar', person.avatar)
+                  req.flash('matcheduser', person.username)
+                  //
+                  res.redirect('home')
+                }
+              })
             }
           },
         )
