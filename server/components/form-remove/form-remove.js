@@ -1,7 +1,7 @@
 import message from '../../data/messages.json'
 
 const JS_HOOK_REMOVE = '[js-hook-form-remove]'
-const JS_HOOK_FORM_MATCH_BUTTON = '[js-hook-form-remove-button]'
+const JS_HOOK_FORM_REMOVE_BUTTON = '[js-hook-form-remove-button]'
 const JS_HOOK_OVERLAY = '[js-hook-overlay]'
 const JS_HOOK_MODAL = '[js-hook-modal]'
 const JS_HOOK_MODAL_CONTENT = '[js-hook-modal-content]'
@@ -13,7 +13,7 @@ const CLASS_MODAL_IS_ACTIVE = 'modal--is-active'
 class Remove {
   constructor(element) {
     this.form = element
-    this.button = document.querySelector(JS_HOOK_FORM_MATCH_BUTTON)
+    this.button = document.querySelector(JS_HOOK_FORM_REMOVE_BUTTON)
     this.overlay = document.querySelector(JS_HOOK_OVERLAY)
     this.modal = document.querySelector(JS_HOOK_MODAL)
     this.modalContent = document.querySelector(JS_HOOK_MODAL_CONTENT)
@@ -56,7 +56,7 @@ class Remove {
       if (data) {
         const element = this.form.closest(JS_HOOK_REMOVE)
 
-        if (!data.match) {
+        if (data.avatar && data.username) {
           const html = `
             <h2 class="modal__title">So sad things didn't work out..</h2>
             <p class="modal__description">Hopefully the someone else will be your soulmate! You succesfully removed ${data.username}</p>
