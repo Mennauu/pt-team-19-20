@@ -23,37 +23,7 @@
   subtitle: 'Since this is your first time visiting you have to fill in some information.'
 }) %}
 
-  {% call locationWrapper({
-    label: 'What is your location?',
-    hook: 'location-form',
-    class: 'form__item--is-visible'
-  }) %}
 
-    {{ input({
-      name: 'inputLocation',
-      id: 'inputLocation',
-      label: 'Fill in a city name',
-      hook: 'input-location',
-      autofocus: true,
-      class: 'form__item--is-visible display-block no-margin-bottom',
-      maxlength: '50',
-      placeholder: 'Amsterdam'
-    }) }}
-
-    {% if locationSuggestions %}
-
-        {% for location in locationSuggestions %}
-
-          {{ radio({
-            name: 'inputSuggestion',
-            value: location.woonplaats
-          }) }}
-
-        {% endfor %}
-
-    {% endif %}
-
-  {% endcall %}
 
   {% call fieldset({ legend: 'Main personal information', sronly: true }) %}
 
@@ -125,7 +95,7 @@
       image: '/assets/images/gender.png',
       checked: values.gender
     }) }}
-  
+
   {% endcall %}
 
 {% endcall %}
@@ -158,7 +128,7 @@
       image: '/assets/images/gender.png',
       checked: values.attraction
     }) }}
-  
+
   {% endcall %}
 
   {{ range({
@@ -172,12 +142,12 @@
     toAge: values.toAge
   }) }}
 
-  {% if error %} 
-    {{ message({ 
+  {% if error %}
+    {{ message({
       text: error ,
       hook: 'form-error',
       class: errorClass
-    }) }} 
+    }) }}
   {% endif %}
 
 {% endcall %}
@@ -192,6 +162,40 @@
     class: 'form__item--is-visible',
     accept: 'image/*'
   }) }}
+
+  {% call locationWrapper({
+    label: 'What is your location?',
+    hook: 'location-form',
+    class: 'form__item--is-visible'
+  }) %}
+
+    {{ input({
+      name: 'inputLocation',
+      id: 'inputLocation',
+      label: 'Fill in a city name',
+      hook: 'input-location',
+      autofocus: true,
+      class: 'form__item--is-visible display-block no-margin-bottom',
+      maxlength: '50',
+      placeholder: 'Amsterdam',
+      value: values.inputLocation
+    }) }}
+
+    <div js-hook-input-suggestions>
+      {% if locationSuggestions %}
+
+          {% for location in locationSuggestions %}
+
+            {{ radio({
+              name: 'inputSuggestion',
+              value: location.woonplaats
+            }) }}
+
+          {% endfor %}
+
+      {% endif %}
+    </div>
+  {% endcall %}
 
   {% call radioWrapper({
     label: "Lastly, what is your coding level?",
@@ -219,14 +223,14 @@
       image: '/assets/images/god.png',
       checked: values.level
     }) }}
-  
+
   {% endcall %}
 
 {% endcall %}
 
   </div>
 
-  {{ button({ 
+  {{ button({
     element: 'button',
     label: 'Next',
     variant: 'secondary',
@@ -235,7 +239,7 @@
     hook: 'next-button'
   }) }}
 
-  {{ button({ 
+  {{ button({
     element: 'button',
     label: 'Submit and start journey',
     variant: 'green',
