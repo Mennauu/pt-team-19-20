@@ -50,21 +50,6 @@
         maxlength: '2'
       }) }}
 
-      {# {% call select({
-        name: 'age',
-        label: 'And what is your age?',
-        hook: 'input-age',
-        class: 'form__item--is-visible'
-      }) %}
-
-        <option value="">--</option>
-
-        {% for age in range(18, 120) %}
-          <option value="{{ age }}">{{ age }}</option>
-        {% endfor %}
-
-      {% endcall %} #}
-
       {% call radioWrapper({
         label: 'And your gender?',
         hook: 'gender-form',
