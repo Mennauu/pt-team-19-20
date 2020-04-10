@@ -3,11 +3,13 @@ import noUiSlider from 'nouislider'
 import validator from 'validator'
 import wNumb from 'wnumb'
 
+import cityLocations from '../../data/cityLocations.json'
 import message from '../../data/messages.json'
 
 const JS_HOOK_NEXT_BUTTON = '[js-hook-next-button]'
 const JS_HOOK_INPUT_NAME = '[js-hook-input-name]'
 const JS_HOOK_INPUT_LOCATION = '[js-hook-input-location]'
+const JS_HOOK_INPUT_SUGGESTIONS = '[js-hook-input-suggestions]'
 const JS_HOOK_INPUT_AGE = '[js-hook-input-age]'
 const JS_HOOK_INPUT_AGE_RANGE = '[js-hook-input-age-range]'
 const JS_HOOK_SUBMIT_BUTTON = '[js-hook-submit-button]'
@@ -34,6 +36,7 @@ class FormSettings {
     this.form = element
     this.inputName = element.querySelector(JS_HOOK_INPUT_NAME)
     this.inputLocation = element.querySelector(JS_HOOK_INPUT_LOCATION)
+    this.inputSuggestions = element.querySelector(JS_HOOK_INPUT_SUGGESTIONS)
     this.inputAge = element.querySelector(JS_HOOK_INPUT_AGE)
     this.inputAgeRange = element.querySelector(JS_HOOK_INPUT_AGE_RANGE)
     this.levelForm = element.querySelector(JS_HOOK_LEVEL_FORM)
@@ -101,6 +104,12 @@ class FormSettings {
       'keydown',
       debounce(element => {
         this.enableButton(element)
+      }, 200),
+    )
+    this.inputLocation.addEventListener(
+      'input',
+      debounce(element => {
+        this.setLocationSuggestions(element)
       }, 200),
     )
     this.fileUpload.addEventListener('change', () => this.formHandler())
@@ -283,6 +292,32 @@ class FormSettings {
     }
 
     return trueCount
+  }
+
+  setLocationSuggestions(element) {
+    const value = element.target.value.toLowerCase()
+    // converts input to Uppercase first word letters
+
+    const findMatchingCityResults = value => {
+      return cityLocations.filter(item => item.woonplaats.toLowerCase().includes(value))
+    }
+    const maxFiveMatchingResults = findMatchingCityResults(value).slice(0, 5)
+
+    if (value.length >= 2 && maxFiveMatchingResults.length) {
+      console.log(maxFiveMatchingResults)
+      this.inputSuggestions.innerHTML = ''
+
+      maxFiveMatchingResults.forEach(item => {
+        console.log(item)
+        this.inputSuggestions.insertAdjacentHTML(
+          'beforeend',
+          `<label class="" for="${item.woonplaats}">
+            <span class="form__radio-title">${item.woonplaats}</span>
+            <input class="form__radio" type="radio" name="inputSuggestion" id="${item.woonplaats}" value="${item.woonplaats}">
+          </label>`,
+        )
+      })
+    }
   }
 
   submitForm() {
