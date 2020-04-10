@@ -15,7 +15,8 @@ const JS_HOOK_INPUT_FILE = '[js-hook-input-file]'
 const JS_HOOK_RANGE_FROM = '[js-hook-range-from]'
 const JS_HOOK_RANGE_TO = '[js-hook-range-to]'
 const JS_HOOK_INPUT_SONG = '[js-hook-input-song]'
-const JS_HOOK_INPUT_ARTIST = '[js-hook-input-arist]'
+const JS_HOOK_INPUT_ARTIST = '[js-hook-input-artist]'
+const JS_HOOK_SELECT_GENRE = '[js-hook-select-genre]'
 const JS_HOOK_FORM_SETTINGS_PE = '[js-hook-form-settings-pe]'
 const JS_HOOK_NOTIFICATION = '[js-hook-notification]'
 const JS_HOOK_NOTIFICATION_MESSAGE = '[js-hook-notification-message]'
@@ -28,7 +29,6 @@ const CLASS_NOTIFICATION_IS_ACTIVE = 'notification--is-active'
 
 const RADIO_INPUT_GENDER = 'gender'
 const RADIO_INPUT_ATTRACTION = 'attraction'
-const RADIO_INPUT_GENRE = 'genre'
 
 class FormSettings {
   constructor(element) {
@@ -40,20 +40,21 @@ class FormSettings {
     this.fileUpload = element.querySelector(JS_HOOK_INPUT_FILE)
     this.inputRangeFrom = element.querySelector(JS_HOOK_RANGE_FROM)
     this.inputRangeTo = element.querySelector(JS_HOOK_RANGE_TO)
+    this.inputSong = element.querySelector(JS_HOOK_INPUT_SONG)
+    this.inputArtist = element.querySelector(JS_HOOK_INPUT_ARTIST)
+    this.selectGenre = element.querySelector(JS_HOOK_SELECT_GENRE)
     this.pe = element.querySelector(JS_HOOK_FORM_SETTINGS_PE)
     this.notification = document.querySelector(JS_HOOK_NOTIFICATION)
     this.notificationMessage = document.querySelector(JS_HOOK_NOTIFICATION_MESSAGE)
     this.genderInputs = document.getElementsByName(RADIO_INPUT_GENDER)
     this.attractionInputs = document.getElementsByName(RADIO_INPUT_ATTRACTION)
-    this.inputSong = document.querySelector(JS_HOOK_INPUT_SONG)
-    this.inputArtist = document.querySelector(JS_HOOK_INPUT_ARTIST)
-    this.genreInputs = document.getElementsByName(RADIO_INPUT_GENRE)
 
     this.inputRanges = [this.inputRangeFrom, this.inputRangeTo]
     this.formItems = [...element.querySelectorAll('.' + CLASS_FORM_ITEM)]
 
     this.nextButton = document.querySelector(JS_HOOK_NEXT_BUTTON)
     this.submitButton = document.querySelector(JS_HOOK_SUBMIT_BUTTON)
+    this.textInputs = [this.inputName, this.inputAge, this.inputSong, this.inputArtist]
 
     this.initialLoadEvents()
     this.bindEvents()
@@ -93,18 +94,16 @@ class FormSettings {
   bindEvents() {
     this.form.addEventListener('submit', () => this.validationEvents(event))
     this.nextButton.addEventListener('click', () => this.formHandler())
-    this.inputName.addEventListener(
-      'keydown',
-      debounce(element => {
-        this.enableButton(element)
-      }, 200),
-    )
-    this.inputAge.addEventListener(
-      'keydown',
-      debounce(element => {
-        this.enableButton(element)
-      }, 200),
-    )
+
+    for (const input of this.textInputs) {
+      input.addEventListener(
+        'keydown',
+        debounce(element => {
+          this.enableButton(element)
+        }, 200),
+      )
+    }
+
     this.fileUpload.addEventListener('change', () => this.formHandler())
 
     this.inputAgeRange.noUiSlider.on('update', (values, handle) =>
@@ -115,6 +114,8 @@ class FormSettings {
   formHandler() {
     this.closeNotification()
 
+    const disabledArray = [1, 6, 7]
+
     for (const [i, item] of this.formItems.entries()) {
       if (!item.classList.contains(CLASS_INPUT_IS_VISIBLE)) {
         const itemInput = getInputFromParent(item)
@@ -123,12 +124,14 @@ class FormSettings {
 
         if (itemInput) itemInput.focus()
 
-        if (i === 1) {
-          setTimeout(() => {
-            if (!this.nextButton.hasAttribute('disabled')) {
-              this.nextButton.setAttribute('disabled', '')
-            }
-          }, 0)
+        for (const index of disabledArray) {
+          if (i === index) {
+            setTimeout(() => {
+              if (!this.nextButton.hasAttribute('disabled')) {
+                this.nextButton.setAttribute('disabled', '')
+              }
+            }, 0)
+          }
         }
 
         if (item.classList.contains('c-radio')) {
@@ -148,14 +151,10 @@ class FormSettings {
         }
 
         if (i === this.formItems.length - 1) {
-          const itemLabels = getInputsFromParent(item)
-
           this.nextButton.classList.add(CLASS_UTILITY_IS_INVISIBLE)
 
           if (this.submitButton.classList.contains(CLASS_UTILITY_IS_INVISIBLE)) {
-            for (const label of itemLabels) {
-              label.addEventListener('click', () => this.enableSubmit())
-            }
+            this.selectGenre.addEventListener('change', () => this.enableSubmit())
           }
         }
 
