@@ -6,11 +6,11 @@ import message from '../../data/messages.json'
 import dataNavigation from '../../data/navigation.json'
 import User from '../../database/models/user.js'
 
-function findExactCity(value) {
+const findExactCity = value => {
   return cityLocations.find(entry => entry.woonplaats === value)
 }
 
-function findMatchingCityResults(value) {
+const findMatchingCityResults = value => {
   return cityLocations.filter(item => item.woonplaats.includes(value))
 }
 
