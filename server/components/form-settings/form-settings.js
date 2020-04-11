@@ -10,6 +10,7 @@ const JS_HOOK_NEXT_BUTTON = '[js-hook-next-button]'
 const JS_HOOK_INPUT_NAME = '[js-hook-input-name]'
 const JS_HOOK_INPUT_LOCATION = '[js-hook-input-location]'
 const JS_HOOK_INPUT_SUGGESTIONS = '[js-hook-input-suggestions]'
+const JS_HOOK_GEO_API_LOCATION = '[js-hook-geo-api-location]'
 const JS_HOOK_INPUT_AGE = '[js-hook-input-age]'
 const JS_HOOK_INPUT_AGE_RANGE = '[js-hook-input-age-range]'
 const JS_HOOK_SUBMIT_BUTTON = '[js-hook-submit-button]'
@@ -26,6 +27,7 @@ const CLASS_UTILITY_IS_INVISIBLE = 'u--is-hidden'
 const CLASS_FORM_ITEM = 'form__item'
 const CLASS_FORM_PE = 'form__settings--pe'
 const CLASS_NOTIFICATION_IS_ACTIVE = 'notification--is-active'
+const CLASS_FORM_SETTINGS_HIDE = 'form__settings-hide'
 
 const RADIO_INPUT_GENDER = 'gender'
 const RADIO_INPUT_ATTRACTION = 'attraction'
@@ -36,6 +38,7 @@ class FormSettings {
     this.form = element
     this.inputName = element.querySelector(JS_HOOK_INPUT_NAME)
     this.inputLocation = element.querySelector(JS_HOOK_INPUT_LOCATION)
+    this.geoLocation = element.querySelector(JS_HOOK_GEO_API_LOCATION)
     this.inputSuggestions = element.querySelector(JS_HOOK_INPUT_SUGGESTIONS)
     this.inputAge = element.querySelector(JS_HOOK_INPUT_AGE)
     this.inputAgeRange = element.querySelector(JS_HOOK_INPUT_AGE_RANGE)
@@ -63,6 +66,7 @@ class FormSettings {
   initialLoadEvents() {
     this.nextButton.classList.remove(CLASS_UTILITY_IS_INVISIBLE)
     this.submitButton.classList.add(CLASS_UTILITY_IS_INVISIBLE)
+    this.geoLocation.classList.remove(CLASS_FORM_SETTINGS_HIDE)
     this.pe.classList.remove(CLASS_FORM_PE)
 
     this.inputRangeFrom.setAttribute('readonly', '')
@@ -110,6 +114,12 @@ class FormSettings {
       'input',
       debounce(element => {
         this.setLocationSuggestions(element)
+      }, 200),
+    )
+    this.geoLocation.addEventListener(
+      'click',
+      debounce(element => {
+        this.getGeoLocation(element)
       }, 200),
     )
     this.fileUpload.addEventListener('change', () => this.formHandler())
@@ -318,6 +328,26 @@ class FormSettings {
         )
       })
     }
+  }
+
+  async getGeoLocation(element) {
+    this.inputLocation.disabled = true
+    element.target.disabled = true
+    element.target.innerText = 'Getting personal location'
+
+    // waits for GEO location api to resolve promise
+    const data = await new Promise((resolve, reject) => {
+      navigator.geolocation.getCurrentPosition(resolve, reject)
+    })
+    const { latitude, longitude } = data.coords
+    const location = JSON.stringify({ latitude, longitude })
+
+    this.geoLocation.insertAdjacentHTML(
+      'afterend',
+      `<input type=hidden value='` + location + `' name="geoLocation">`,
+    )
+
+    element.target.innerText = 'Location retreived'
   }
 
   submitForm() {
