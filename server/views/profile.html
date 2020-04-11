@@ -1,6 +1,7 @@
 {% from '../components/image/image.html' import image %}
 {% from '../components/intro/intro.html' import intro %}
 {% from '../components/match/match.html' import match %}
+{% from '../components/list/list.html' import list %}
 {% from '../components/match/match-wrapper.html' import matchWrapper %}
 {% from '../components/form-elements/form-message/form-message.html' import message %}
 
@@ -22,7 +23,7 @@
 
               {%- if data.id 
                   and data.avatar 
-                  and data.username 
+                  and data.username
                   and data.age
                   and data.level %}
 
@@ -37,16 +38,43 @@
 
               {% endif -%}
 
-              {%- if removeButton === true %}
-
-              {% include '../components/form-remove/form-remove.html' %}
-
-              {% endif -%}
-
             {% endif -%}
 
           {% endcall %}
 
+         </section>
+
+         <section class="o-col-4--md match__background">
+
+          {% call matchWrapper({
+            subtitle: 'Profile'
+          }) %}
+         
+          {%- if data %}
+          <h2>{{data.name}}</h2>
+          <h3>{{data.age}}</h3>
+          <h3>10 km</h3>
+          <h4>Songs</h4>
+          {% call list({
+            hook: 'song-wrapper'
+          }) %}
+          {% endcall %}
+          <h4>Festivals</h4>
+          {% call list({
+            hook: 'festival-wrapper'
+          }) %}
+          {% endcall %}
+
+          {%- if removeButton === true %}
+
+          {% include '../components/form-remove/form-remove.html' %}
+
+          {% endif -%}
+
+          {% endif -%}
+         
+          {% endcall %}
+         
          </section>
 
       </div>
