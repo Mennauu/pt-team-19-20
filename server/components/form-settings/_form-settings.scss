@@ -86,6 +86,10 @@
   align-self: center !important;
 }
 
+.form__settings-hide {
+  display: none;
+}
+
 .form__settings--pe {
   animation: delayedFadeIn 4.22s;
 }
