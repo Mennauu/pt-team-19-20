@@ -25,6 +25,7 @@ export const userSettings = (req, res) => {
     level,
     inputLocation,
     inputSuggestion,
+    geoLocation,
   } = req.body
 
   // Validate name length
@@ -93,7 +94,8 @@ export const userSettings = (req, res) => {
     return this.errorHandler(message.chooseLevel)
   }
 
-  if (inputLocation && !inputSuggestion) {
+  if (inputLocation && !inputSuggestion && !geoLocation) {
+    console.log('no geo, suggestion')
     // Check if location contains letters, spaces, dashes and high comma only
     if (!validator.matches(inputLocation, /^[a-zA-Z\s'-]*$/)) {
       req.flash('error', message.locationPattern)
@@ -138,11 +140,21 @@ const updateUserSettings = (req, res) => {
     level,
     inputLocation,
     inputSuggestion,
+    geoLocation,
   } = req.body
 
-  const location = findExactCity(inputLocation).length
-    ? { lat: findExactCity(inputLocation).lat, long: findExactCity(inputLocation).long }
-    : { lat: findExactCity(inputSuggestion).lat, long: findExactCity(inputSuggestion).long }
+  const location = () => {
+    // GEO location
+    if (geoLocation) {
+      return JSON.parse(geoLocation)
+    }
+    // Full city name location
+    if (findExactCity(inputLocation).length) {
+      return { lat: findExactCity(inputLocation).lat, long: findExactCity(inputLocation).long }
+    }
+    // Suggested city location
+    return { lat: findExactCity(inputSuggestion).lat, long: findExactCity(inputSuggestion).long }
+  }
 
   User.updateOne(
     { _id: req.session.passport.user },
