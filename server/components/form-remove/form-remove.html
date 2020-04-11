@@ -8,7 +8,6 @@
 {% call form({
   method: 'POST',
   action: '/remove-match',
-  title: 'Remove',
   hook: 'form-remove'
 }) %}
 
@@ -16,12 +15,12 @@
 
     {{ button({ 
       element: 'button',
-      label: 'Remove', 
+      label: 'Remove from matches', 
       type: 'submit',
       variant: 'red',
       value: data.id,
       name:'matchID',
-      class: 'form__button',
+      class: 'form-remove-button',
       hook: 'form-remove-button'
     }) }}
 
