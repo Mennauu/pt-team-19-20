@@ -147,12 +147,18 @@ const updateUserSettings = (req, res) => {
     if (geoLocation) {
       return JSON.parse(geoLocation)
     }
-    // Full city name location
-    if (findExactCity(inputLocation).length) {
-      return { lat: findExactCity(inputLocation).lat, long: findExactCity(inputLocation).long }
-    }
     // Suggested city location
-    return { lat: findExactCity(inputSuggestion).lat, long: findExactCity(inputSuggestion).long }
+    if (findExactCity(inputSuggestion)) {
+      return {
+        latitude: findExactCity(inputSuggestion).latitude,
+        longitude: findExactCity(inputSuggestion).longitude,
+      }
+    }
+    // Full city name location
+    return {
+      latitude: findExactCity(inputLocation).latitude,
+      longitude: findExactCity(inputLocation).longitude,
+    }
   }
 
   User.updateOne(
