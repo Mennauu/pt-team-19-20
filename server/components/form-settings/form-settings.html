@@ -169,6 +169,16 @@
     class: 'form__item--is-visible'
   }) %}
 
+  {{ button({
+    element: 'button',
+    label: 'Use your personal location',
+    variant: 'secondary',
+    size: 'large',
+    class: 'form__button form__settings-hide',
+    hook: 'geo-api-location'
+  }) }}
+
+
     {{ input({
       name: 'inputLocation',
       id: 'inputLocation',
