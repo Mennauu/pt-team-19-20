@@ -72,26 +72,36 @@ export const userSettings = (req, res) => {
 
   // Check if an gender has been selected
   if (gender === '') {
-    return this.errorHandler(message.chooseGender)
+    req.flash('error', message.chooseGender)
+
+    return res.redicect('back')
   }
 
   // Check if an attraction has been selected
   if (attraction === '') {
-    return this.errorHandler(message.chooseAttraction)
+    req.flash('error', message.chooseAttraction)
+
+    return res.redicect('back')
   }
 
   // Check if upload contains a valid image
   if (!req.file) {
-    return this.errorHandler(message.setAvatar)
+    req.flash('error', message.setAvatar)
+
+    return res.redicect('back')
   } else {
     if (!isImage(req.file.originalname)) {
-      return this.errorHandler(message.setRealImage)
+      req.flash('error', message.setRealImage)
+
+      return res.redicect('back')
     }
   }
 
   // Check if an attraction has been selected
   if (level === '') {
-    return this.errorHandler(message.chooseLevel)
+    req.flash('error', message.chooseLevel)
+
+    return res.redicect('back')
   }
 
   if (inputLocation && !inputSuggestion && !geoLocation) {
