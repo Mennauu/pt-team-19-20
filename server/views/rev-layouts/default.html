@@ -36,7 +36,7 @@
 
         <title>BE Course 2020</title>
 
-        <link rel="stylesheet" href="/assets/css/styles-0904c0b721.min.css">
+        <link rel="stylesheet" href="/assets/css/styles-8fac234b23.min.css">
 
         <!-- Favicons -->
         <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/favicons/apple-touch-icon.png">
@@ -98,10 +98,10 @@
         {{ notification({ message: notificationMessage, class: notificationClass }) }}
 
         {% if environment == 'local' %}
-            <script type="module" async="async" src="/assets/js/main-es.js"></script>
+            <script type="module" async="async" src="/assets/js/main-es-f7f31ea7ad.js"></script>
         {% else %}
-            <script type="module" async="async" src="/assets/js/main-es-dd12e2fef2.min.js"></script>
-            <script nomodule="nomodule" async="async" src="/assets/js/main-c7050dec1b.min.js"></script>
+            <script type="module" async="async" src="/assets/js/main-es.min.js"></script>
+            <script nomodule="nomodule" async="async" src="/assets/js/main.min.js"></script>
         {% endif %}
 
     </body>
