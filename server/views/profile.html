@@ -51,25 +51,34 @@
           }) %}
          
           {%- if data %}
-          <h2>{{data.name}}</h2>
-          <h3>{{data.age}}</h3>
-          <h3>10 km</h3>
-          <h4>Songs</h4>
-          {% call list({
-            hook: 'song-wrapper'
-          }) %}
-          {% endcall %}
-          <h4>Festivals</h4>
-          {% call list({
-            hook: 'festival-wrapper'
-          }) %}
-          {% endcall %}
 
-          {%- if removeButton === true %}
+            <h2>{{data.name}}</h2>
 
-          {% include '../components/form-remove/form-remove.html' %}
+            <h3>{{data.age}}</h3>
 
-          {% endif -%}
+            <h3>10 km</h3>
+
+            <h4>Songs</h4>
+
+            {% call list({
+              hook: 'song-wrapper'
+            }) %}
+            
+            {% endcall %}
+
+            <h4>Festivals</h4>
+
+            {% call list({
+              hook: 'festival-wrapper'
+            }) %}
+
+            {% endcall %}
+
+            {%- if removeButton === true %}
+
+              {% include '../components/form-remove/form-remove.html' %}
+
+            {% endif -%}
 
           {% endif -%}
          
