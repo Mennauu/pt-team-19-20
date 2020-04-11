@@ -95,7 +95,6 @@ export const userSettings = (req, res) => {
   }
 
   if (inputLocation && !inputSuggestion && !geoLocation) {
-    console.log('no geo, suggestion')
     // Check if location contains letters, spaces, dashes and high comma only
     if (!validator.matches(inputLocation, /^[a-zA-Z\s'-]*$/)) {
       req.flash('error', message.locationPattern)
@@ -168,7 +167,7 @@ const updateUserSettings = (req, res) => {
       toAge,
       avatar: `assets/uploads/${req.file.filename}`,
       level,
-      location: location,
+      location: location(),
       firstVisit: false,
     },
     (err, result) => {
