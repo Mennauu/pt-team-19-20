@@ -59,7 +59,7 @@ class Remove {
         if (data.avatar && data.username) {
           const html = `
             <h2 class="modal__title">So sad things didn't work out..</h2>
-            <p class="modal__description">Hopefully the someone else will be your soulmate! You succesfully removed ${data.username}</p>
+            <p class="modal__description">Hopefully someone else will be your soulmate! You succesfully removed ${data.username}</p>
             <div class="modal__image-wrapper">
              <img class="modal__image" src="${data.avatar}" alt="${data.username}">
             </div>
