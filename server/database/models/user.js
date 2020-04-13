@@ -14,6 +14,10 @@ const userSchema = new mongoose.Schema({
   avatar: String,
   images: [],
   firstVisit: Boolean,
+  location: {
+    latitude: Number,
+    longitude: Number,
+  },
   liked: [],
   disliked: [],
   matched: [],

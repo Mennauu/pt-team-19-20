@@ -3,10 +3,14 @@ import noUiSlider from 'nouislider'
 import validator from 'validator'
 import wNumb from 'wnumb'
 
+import cityLocations from '../../data/cityLocations.json'
 import message from '../../data/messages.json'
 
 const JS_HOOK_NEXT_BUTTON = '[js-hook-next-button]'
 const JS_HOOK_INPUT_NAME = '[js-hook-input-name]'
+const JS_HOOK_INPUT_LOCATION = '[js-hook-input-location]'
+const JS_HOOK_INPUT_SUGGESTIONS = '[js-hook-input-suggestions]'
+const JS_HOOK_GEO_API_LOCATION = '[js-hook-geo-api-location]'
 const JS_HOOK_INPUT_AGE = '[js-hook-input-age]'
 const JS_HOOK_INPUT_AGE_RANGE = '[js-hook-input-age-range]'
 const JS_HOOK_SUBMIT_BUTTON = '[js-hook-submit-button]'
@@ -34,6 +38,9 @@ class FormSettings {
   constructor(element) {
     this.form = element
     this.inputName = element.querySelector(JS_HOOK_INPUT_NAME)
+    this.inputLocation = element.querySelector(JS_HOOK_INPUT_LOCATION)
+    this.geoLocation = element.querySelector(JS_HOOK_GEO_API_LOCATION)
+    this.inputSuggestions = element.querySelector(JS_HOOK_INPUT_SUGGESTIONS)
     this.inputAge = element.querySelector(JS_HOOK_INPUT_AGE)
     this.inputAgeRange = element.querySelector(JS_HOOK_INPUT_AGE_RANGE)
     this.levelForm = element.querySelector(JS_HOOK_LEVEL_FORM)
@@ -68,6 +75,10 @@ class FormSettings {
     this.inputRangeFrom.setAttribute('readonly', '')
     this.inputRangeTo.setAttribute('readonly', '')
 
+    if ('geolocation' in navigator) {
+      this.geoLocation.classList.remove(CLASS_UTILITY_IS_INVISIBLE)
+    }
+
     if (this.inputName.value.length < 2) {
       this.disableButton(this.nextButton)
     }
@@ -94,6 +105,30 @@ class FormSettings {
   bindEvents() {
     this.form.addEventListener('submit', () => this.validationEvents(event))
     this.nextButton.addEventListener('click', () => this.formHandler())
+    this.inputName.addEventListener(
+      'keydown',
+      debounce(element => {
+        this.enableButton(element)
+      }, 200),
+    )
+    this.inputAge.addEventListener(
+      'keydown',
+      debounce(element => {
+        this.enableButton(element)
+      }, 200),
+    )
+    this.inputLocation.addEventListener(
+      'input',
+      debounce(element => {
+        this.setLocationSuggestions(element)
+      }, 200),
+    )
+    this.geoLocation.addEventListener(
+      'click',
+      debounce(element => {
+        this.getGeoLocation(element)
+      }, 200),
+    )
 
     for (const input of this.textInputs) {
       input.addEventListener(
@@ -275,6 +310,65 @@ class FormSettings {
     }
 
     return trueCount
+  }
+
+  setLocationSuggestions(element) {
+    const value = element.target.value.toLowerCase()
+    // converts input to Uppercase first word letters
+
+    const findMatchingCityResults = value => {
+      return cityLocations.filter(item => item.woonplaats.toLowerCase().includes(value))
+    }
+    const maxFiveMatchingResults = findMatchingCityResults(value).slice(0, 5)
+
+    if (value.length >= 2 && maxFiveMatchingResults.length) {
+      console.log(maxFiveMatchingResults)
+      this.inputSuggestions.innerHTML = ''
+
+      maxFiveMatchingResults.forEach(item => {
+        console.log(item)
+        this.inputSuggestions.insertAdjacentHTML(
+          'beforeend',
+          `<label class="" for="${item.woonplaats}">
+            <span class="form__radio-title">${item.woonplaats}</span>
+            <input class="form__radio" type="radio" name="inputSuggestion" id="${item.woonplaats}" value="${item.woonplaats}">
+          </label>`,
+        )
+      })
+    }
+  }
+
+  async getGeoLocation(element) {
+    element.target.disabled = true
+    // waits for GEO location api to resolve promise
+    const data = await new Promise((resolve, reject) => {
+      const error = error => {
+        if (error.code == error.PERMISSION_DENIED) {
+          resolve(false)
+        } else {
+          reject(error)
+        }
+      }
+      navigator.geolocation.getCurrentPosition(resolve, error)
+    })
+
+    if (!data) {
+      element.target.innerText = 'Location permission blocked...'
+      return
+    }
+
+    this.inputLocation.disabled = true
+    element.target.innerText = 'Getting personal location'
+
+    const { latitude, longitude } = data.coords
+    const location = JSON.stringify({ latitude, longitude })
+
+    this.geoLocation.insertAdjacentHTML(
+      'afterend',
+      `<input type=hidden value='` + location + `' name="geoLocation">`,
+    )
+
+    element.target.innerText = 'Location retreived'
   }
 
   submitForm() {
