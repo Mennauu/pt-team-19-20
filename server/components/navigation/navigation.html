@@ -24,7 +24,7 @@
     {% endfor %}
 
     {%- if username and id %}
-      <a class="navigation__link navigation__profile" href="/{{id}}?username={{ username }}">
+      <a class="navigation__link navigation__profile" href="/{{ id }}?username={{ username }}">
         <span class="navigation__label">{{ username }}</span>
 
         {%- if avatar %}
