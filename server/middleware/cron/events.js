@@ -1,6 +1,7 @@
 import cron from 'cron'
 import puppeteer from 'puppeteer'
 
+import musicGenres from '../../data/genres.json'
 import Festival from '../../database/models/festival.js'
 
 // Job starts when clock hits the 0 hour, the 0 minute
@@ -21,21 +22,6 @@ Festival.findOne().then(latestFestival => {
 export default job.start()
 
 const setFestivalData = async () => {
-  // Maybe we need to retreive this data from the database in the future...
-  const musicGenres = [
-    'deephouse',
-    'electro',
-    'hardcore',
-    'hardstyle',
-    'house',
-    'pop',
-    'rb',
-    'rock',
-    'techno',
-    'trance',
-    'urban',
-  ]
-
   try {
     puppeteer.launch().then(async browser => {
       const page = await browser.newPage()
