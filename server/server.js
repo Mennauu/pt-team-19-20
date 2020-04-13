@@ -101,12 +101,14 @@ app.get('/login', route.login)
 app.get('/logout', route.logout)
 app.get('/register', route.register)
 app.get('/home', route.home)
+app.get('/:id', route.profile)
 app.get('*', route.error)
 
 // POST routes
 app.post('/register-user', route.registerUser)
 app.post('/user-settings', upload.single('avatar'), route.userSettings)
 app.post('/user-matches', route.userMatches)
+app.post('/remove-match', route.removeMatch)
 app.post(
   '/login-authenticate',
   auth.authenticate('local', {
