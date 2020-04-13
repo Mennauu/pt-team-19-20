@@ -30,7 +30,6 @@ const CLASS_UTILITY_IS_INVISIBLE = 'u--is-hidden'
 const CLASS_FORM_ITEM = 'form__item'
 const CLASS_FORM_PE = 'form__settings--pe'
 const CLASS_NOTIFICATION_IS_ACTIVE = 'notification--is-active'
-const CLASS_FORM_SETTINGS_HIDE = 'form__settings-hide'
 
 const RADIO_INPUT_GENDER = 'gender'
 const RADIO_INPUT_ATTRACTION = 'attraction'
@@ -71,7 +70,7 @@ class FormSettings {
   initialLoadEvents() {
     this.nextButton.classList.remove(CLASS_UTILITY_IS_INVISIBLE)
     this.submitButton.classList.add(CLASS_UTILITY_IS_INVISIBLE)
-    this.geoLocation.classList.remove(CLASS_FORM_SETTINGS_HIDE)
+    this.geoLocation.classList.remove(CLASS_UTILITY_IS_INVISIBLE)
     this.pe.classList.remove(CLASS_FORM_PE)
 
     this.inputRangeFrom.setAttribute('readonly', '')
