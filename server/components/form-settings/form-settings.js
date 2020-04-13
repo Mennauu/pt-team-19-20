@@ -70,11 +70,14 @@ class FormSettings {
   initialLoadEvents() {
     this.nextButton.classList.remove(CLASS_UTILITY_IS_INVISIBLE)
     this.submitButton.classList.add(CLASS_UTILITY_IS_INVISIBLE)
-    this.geoLocation.classList.remove(CLASS_UTILITY_IS_INVISIBLE)
     this.pe.classList.remove(CLASS_FORM_PE)
 
     this.inputRangeFrom.setAttribute('readonly', '')
     this.inputRangeTo.setAttribute('readonly', '')
+
+    if ('geolocation' in navigator) {
+      this.geoLocation.classList.remove(CLASS_UTILITY_IS_INVISIBLE)
+    }
 
     if (this.inputName.value.length < 2) {
       this.disableButton(this.nextButton)
@@ -336,14 +339,27 @@ class FormSettings {
   }
 
   async getGeoLocation(element) {
-    this.inputLocation.disabled = true
     element.target.disabled = true
-    element.target.innerText = 'Getting personal location'
-
     // waits for GEO location api to resolve promise
     const data = await new Promise((resolve, reject) => {
-      navigator.geolocation.getCurrentPosition(resolve, reject)
+      const error = error => {
+        if (error.code == error.PERMISSION_DENIED) {
+          resolve(false)
+        } else {
+          reject(error)
+        }
+      }
+      navigator.geolocation.getCurrentPosition(resolve, error)
     })
+
+    if (!data) {
+      element.target.innerText = 'Location permission blocked...'
+      return
+    }
+
+    this.inputLocation.disabled = true
+    element.target.innerText = 'Getting personal location'
+
     const { latitude, longitude } = data.coords
     const location = JSON.stringify({ latitude, longitude })
 
