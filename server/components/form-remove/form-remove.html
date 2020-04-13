@@ -1,0 +1,29 @@
+{% from '../form-elements/form/form.html' import form %}
+{% from '../form-elements/form-message/form-message.html' import message %}
+{% from '../form-elements/form-fieldset/form-fieldset.html' import fieldset %}
+{% from '../button/button.html' import button %}
+
+{% set errorClass = 'form__message--has-error' if error != '' %}
+
+{% call form({
+  method: 'POST',
+  action: '/remove-match',
+  hook: 'form-remove'
+}) %}
+
+  {% call fieldset({ legend: 'Remove match', sronly: true }) %}
+
+    {{ button({ 
+      element: 'button',
+      label: 'Remove from matches', 
+      type: 'submit',
+      variant: 'red',
+      value: data.id,
+      name:'matchID',
+      class: 'form-remove-button',
+      hook: 'form-remove-button'
+    }) }}
+
+  {% endcall %}
+
+{% endcall %}

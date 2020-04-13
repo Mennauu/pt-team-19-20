@@ -23,8 +23,8 @@
 
     {% endfor %}
 
-    {%- if username %}
-      <a class="navigation__link navigation__profile" href="/#profile">
+    {%- if username and id %}
+      <a class="navigation__link navigation__profile" href="/{{ id }}?username={{ username }}">
         <span class="navigation__label">{{ username }}</span>
 
         {%- if avatar %}

@@ -1,5 +1,6 @@
 import rangeInclusive from 'range-inclusive'
 
+import genres from '../../data/genres.json'
 import dataNavigation from '../../data/navigation.json'
 import User from '../../database/models/user.js'
 
@@ -40,6 +41,7 @@ export const home = async (req, res) => {
 
           res.render('home', {
             navigation: dataNavigation,
+            id: req.user._id,
             username: req.user.username,
             avatar: req.user.avatar || avatar,
             authenticated: true,
@@ -63,6 +65,7 @@ export const home = async (req, res) => {
         firstvisit: req.user.firstVisit,
         name: req.user.name || req.user.username,
         notificationMessage,
+        genres,
       })
     }
   } else {

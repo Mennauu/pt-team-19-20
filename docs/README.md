@@ -502,7 +502,7 @@ I won't go to much into detail here, since I wrote an article about it which you
 
 ### Linting
 
-We use [ESLint](https://www.npmjs.com/package/eslint) and [SASS-lint](https://github.com/sasstools/sass-lint) for JavaScript and SASS. Two respectable linters, which are very adjustable to your own taste. some real strict rules are created for the linters. The lint errors will show each time you save a SASS file or JavaScript file, or when building the project.
+We use [ESLint](https://www.npmjs.com/package/eslint) and [SASS-lint](https://github.com/sasstools/sass-lint) for JavaScript and SASS. Two respectable linters, which are very adjustable to your own taste. Some real strict rules are created for the linters. The lint errors will show each time you save a SASS file or JavaScript file, or when building the project.
 
 Firstly, [Prettier](https://prettier.io/) is used to format my code on save. It's configured to solve most linting errors, if there are any formatting mistakes. For example, ESLint is told that semicolons at the end of a javascript declaration aren't allowed. So accordingly, prettier is adjusted to remove semicolons on save, to fix these errors.
 
@@ -622,7 +622,7 @@ trim_trailing_whitespace = false
 ### Setup and Build
 
 #### Setup
-[Express](https://www.npmjs.com/package/express) for the server. It's one of the best frameworks for node.  [ESM](https://www.npmjs.com/package/esm) is also included. ESM is a ECMAScript module loader and it allows you to write imports like this:
+[Express](https://www.npmjs.com/package/express) for the server. It's one of the best frameworks for node. [ESM](https://www.npmjs.com/package/esm) is also included. ESM is a ECMAScript module loader and it allows you to write imports like this:
 
 ```JavaScript
 import passport from 'passport'
