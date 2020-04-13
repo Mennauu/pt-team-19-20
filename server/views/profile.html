@@ -24,15 +24,13 @@
               {%- if data.id 
                   and data.avatar 
                   and data.username
-                  and data.age
-                  and data.level %}
+                  and data.age %}
 
                 {{ match({
                   id: data.id,
                   image: data.avatar,
                   username: data.username,
                   age: data.age,
-                  level: data.level,
                   options: false
                 }) }}
 
