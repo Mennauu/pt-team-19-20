@@ -1,6 +1,5 @@
 {% from '../form-elements/form/form.html' import form %}
 {% from '../form-elements/form-radio-wrapper/form-radio-wrapper.html' import radioWrapper %}
-{% from '../form-elements/form-location-wrapper/form-location-wrapper.html' import locationWrapper %}
 {% from '../form-elements/form-input/form-input.html' import input %}
 {% from '../form-elements/form-message/form-message.html' import message %}
 {% from '../form-elements/form-notice/form-notice.html' import notice %}
@@ -8,7 +7,6 @@
 {% from '../form-elements/form-select/form-select.html' import select %}
 {% from '../form-elements/form-option/form-option.html' import option %}
 {% from '../form-elements/form-range/form-range.html' import range %}
-{% from '../form-elements/form-upload/form-upload.html' import upload %}
 {% from '../form-elements/form-fieldset/form-fieldset.html' import fieldset %}
 {% from '../button/button.html' import button %}
 
@@ -47,7 +45,7 @@
       }) }}
 
       {% call radioWrapper({
-        label: 'And your gender?',
+        label: 'Gender',
         hook: 'gender-form'
       }) %}
 
@@ -55,6 +53,7 @@
           name: 'gender',
           value: 'Male',
           image: '/assets/images/male.png',
+          authentication: isAuthenticated,
           checked: data.gender
         }) }}
 
@@ -62,6 +61,7 @@
           name: 'gender',
           value: 'Female',
           image: '/assets/images/female.png',
+          authentication: isAuthenticated,
           checked: data.gender
         }) }}
 
@@ -69,6 +69,7 @@
           name: 'gender',
           value: 'Any',
           image: '/assets/images/gender.png',
+          authentication: isAuthenticated,
           checked: data.gender
         }) }}
 
@@ -87,6 +88,7 @@
           name: 'attraction',
           value: 'Males',
           image: '/assets/images/male.png',
+          authentication: isAuthenticated,
           checked: data.attraction
         }) }}
 
@@ -94,6 +96,7 @@
           name: 'attraction',
           value: 'Females',
           image: '/assets/images/female.png',
+          authentication: isAuthenticated,
           checked: data.attraction
         }) }}
 
@@ -101,6 +104,7 @@
           name: 'attraction',
           value: 'Anyone',
           image: '/assets/images/gender.png',
+          authentication: isAuthenticated,
           checked: data.attraction
         }) }}
 
@@ -128,7 +132,7 @@
 
   {{ button({
     element: 'button',
-    label: 'Submit and start journey',
+    label: 'Change profile',
     variant: 'green',
     size: 'large',
     type: 'submit'
