@@ -44,6 +44,16 @@
 
          <section class="o-col-4--md match__background">
 
+          {%- if isAuthenticated === true %}
+
+            {% if(data) %}
+
+              {% include '../components/form-profile/form-profile.html' %}
+
+            {% endif %}
+
+          {% else %}
+
           {% call matchWrapper({
             subtitle: 'Profile'
           }) %}
@@ -81,7 +91,9 @@
           {% endif -%}
          
           {% endcall %}
-         
+
+          {% endif -%}
+        
          </section>
 
       </div>
