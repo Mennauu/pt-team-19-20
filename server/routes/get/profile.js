@@ -26,6 +26,7 @@ export const profile = async (req, res) => {
         removeButton: matchName.includes(username) ? true : false,
         isAuthenticated: req.user.id === id ? true : false,
         navigation: dataNavigation,
+        authenticated: true,
         id: req.user.id,
         username: req.user.username,
         avatar: req.user.avatar || avatar,
