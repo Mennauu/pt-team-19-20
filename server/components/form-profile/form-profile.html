@@ -16,6 +16,7 @@
   method: 'POST',
   action: '/update-profile',
   class: 'form__profile',
+  hook: 'form-profile',
   title: 'Hello ' +  username + '.',
   subtitle: 'Change your profile.'
 }) %}
@@ -26,6 +27,7 @@
       name: 'name',
       id: 'name',
       label: 'Name',
+      hook: 'input-name',
       autofocus: true,
       maxlength: '256',
       placeholder: 'Robin',
@@ -104,6 +106,7 @@
           name: 'attraction',
           value: 'Anyone',
           image: '/assets/images/gender.png',
+          hook: 'input-name',
           authentication: isAuthenticated,
           checked: data.attraction
         }) }}
@@ -116,6 +119,7 @@
         min: '18',
         max: '99',
         name: 'Age',
+        class: 'form__range--is-small',
         fromAge: data.fromAge,
         toAge: data.toAge
       }) }}
