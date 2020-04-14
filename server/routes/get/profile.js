@@ -1,6 +1,7 @@
 import dataNavigation from '../../data/navigation.json'
 import Festivals from '../../database/models/festival.js'
 import User from '../../database/models/user.js'
+import genres from '../../data/genres.json'
 
 export const profile = async (req, res) => {
   const { id } = req.params
@@ -63,6 +64,7 @@ export const profile = async (req, res) => {
         distance: `${newDistance()}km`,
         avatar: req.user.avatar || avatar,
         name: req.user.name || req.user.username,
+        genres,
       })
     } else {
       const notificationMessage = req.flash('error')[0]

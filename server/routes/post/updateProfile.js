@@ -4,7 +4,7 @@ import message from '../../data/messages.json'
 import User from '../../database/models/user.js'
 
 export const updateProfile = (req, res) => {
-  const { name, age, gender, attraction, fromAge, toAge } = req.body
+  const { name, age, gender, attraction, fromAge, toAge, song, artist, genre } = req.body
 
   // Validate name length
   if (!validator.isByteLength(name, { min: 2, max: 256 })) {
@@ -58,6 +58,9 @@ export const updateProfile = (req, res) => {
         attraction,
         fromAge,
         toAge,
+        song,
+        artist,
+        genre,
       },
     },
     (err, result) => {
