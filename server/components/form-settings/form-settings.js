@@ -314,11 +314,9 @@ class FormSettings {
     const maxFiveMatchingResults = findMatchingCityResults(value).slice(0, 5)
 
     if (value.length >= 2 && maxFiveMatchingResults.length) {
-      console.log(maxFiveMatchingResults)
       this.inputSuggestions.innerHTML = ''
 
       maxFiveMatchingResults.forEach(item => {
-        console.log(item)
         this.inputSuggestions.insertAdjacentHTML(
           'beforeend',
           `<label class="" for="${item.woonplaats}">
@@ -327,6 +325,7 @@ class FormSettings {
           </label>`,
         )
       })
+      this.nextButton.removeAttribute('disabled')
     }
   }
 
@@ -346,6 +345,7 @@ class FormSettings {
 
     if (!data) {
       element.target.innerText = 'Location permission blocked...'
+      this.nextButton.removeAttribute('disabled')
       return
     }
 
@@ -361,6 +361,7 @@ class FormSettings {
     )
 
     element.target.innerText = 'Location retreived'
+    this.nextButton.removeAttribute('disabled')
   }
 
   submitForm() {
