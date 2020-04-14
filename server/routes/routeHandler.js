@@ -7,6 +7,7 @@ import { register } from './get/register.js'
 import { root } from './get/root.js'
 import { registerUser } from './post/registerUser.js'
 import { removeMatch } from './post/removeMatch.js'
+import { updateProfile } from './post/updateProfile.js'
 import { userMatches } from './post/userMatches.js'
 import { userSettings } from './post/userSettings.js'
 
@@ -24,3 +25,4 @@ exports.registerUser = (req, res) => registerUser(req, res)
 exports.userSettings = (req, res) => userSettings(req, res)
 exports.userMatches = (req, res) => userMatches(req, res)
 exports.removeMatch = (req, res) => removeMatch(req, res)
+exports.updateProfile = (req, res) => updateProfile(req, res)
