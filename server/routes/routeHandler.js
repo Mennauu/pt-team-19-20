@@ -5,7 +5,6 @@ import { logout } from './get/logout.js'
 import { profile } from './get/profile.js'
 import { register } from './get/register.js'
 import { root } from './get/root.js'
-import { settings } from './get/settings.js'
 import { registerUser } from './post/registerUser.js'
 import { removeMatch } from './post/removeMatch.js'
 import { userMatches } from './post/userMatches.js'
@@ -18,7 +17,6 @@ exports.logout = (req, res) => logout(req, res)
 exports.register = (req, res) => register(req, res)
 exports.home = (req, res) => home(req, res)
 exports.profile = (req, res) => profile(req, res)
-exports.settings = (req, res) => settings(req, res)
 exports.error = (req, res) => error(req, res)
 
 // POST
