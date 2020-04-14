@@ -2,6 +2,7 @@
   @include hide-scrollbars;
   position: relative;
   display: flex;
+  flex-wrap: wrap;
   overflow-x: auto;
   margin-left: -$global-spacing-sm;
   margin-right: -$global-spacing-sm;
