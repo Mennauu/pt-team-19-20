@@ -1,0 +1,123 @@
+// .form__settings {
+//   @include screen-tablet-portrait-and-bigger {
+//     position: relative;
+//   }
+
+//   .form__item {
+//     display: none;
+//     animation: fadeIn 900ms;
+//     margin-bottom: $global-spacing * 15;
+//   }
+
+//   .form__title {
+//     animation: fadeIn 1.5s;
+//   }
+
+//   .form__subtitle {
+//     margin-bottom: $global-spacing * 10;
+//     animation: delayedFadeIn 2.5s;
+//   }
+
+//   .select__select {
+//     @include fluid-type(5, 3);
+//   }
+
+//   .input__label {
+//     font-weight: bold;
+//   }
+
+//   .input__input {
+//     @include fluid-type(5, 3);
+//     background-color: transparent;
+//     padding-left: 0;
+//     padding-right: 0;
+//     color: $color-black;
+//     font-family: $font-stack-secondary;
+//     // border-bottom: 5px solid rgba($color-black, 0.8);
+
+//     &::placeholder {
+//       color: rgba($color-black, 0.15);
+//     }
+
+//     &[maxlength='2'] {
+//       border-bottom: 0;
+//     }
+
+//     &[type='number'] {
+//       width: auto;
+//       -moz-appearance: textfield;
+//       appearance: textfield;
+
+//       &::-webkit-inner-spin-button,
+//       &::-webkit-outer-spin-button {
+//         -webkit-appearance: none;
+//       }
+//     }
+//   }
+
+//   .form__item--is-visible {
+//     display: block;
+
+//     .input__input {
+//       @include fluid-type(10, 7.5, 'height');
+//     }
+//   }
+
+//   .form__item--first {
+//     animation: delayedFadeIn 4.2s;
+//   }
+// }
+
+// .form__settings .form__item.no-margin-bottom {
+//   margin-bottom: 0;
+// }
+
+// .form__settings-next {
+//   position: fixed;
+//   bottom: $global-spacing-md;
+//   right: $global-spacing-sm;
+//   align-self: flex-end;
+
+//   @include screen-tablet-portrait-and-bigger {
+//     position: absolute;
+//   }
+// }
+
+// .form__settings-submit {
+//   // sass-lint:disable-block no-important
+//   animation: fadeIn 1.25s;
+//   margin-bottom: $global-spacing * 10;
+//   align-self: center !important;
+// }
+
+// .form__settings--pe {
+//   animation: delayedFadeIn 4.22s;
+// }
+
+// @keyframes fadeIn {
+//   from {
+//     opacity: 0;
+//     transform: translateY(#{$global-spacing-sm});
+//   }
+
+//   to {
+//     opacity: 1;
+//     transform: translateY(0);
+//   }
+// }
+
+// @keyframes delayedFadeIn {
+//   0% {
+//     opacity: 0;
+//   }
+
+//   66% {
+//     opacity: 0;
+//     transform: translateY(#{$global-spacing-sm});
+//   }
+
+//   100% {
+//     opacity: 1;
+//     transform: translateY(0);
+//   }
+// }
