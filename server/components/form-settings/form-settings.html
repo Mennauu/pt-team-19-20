@@ -148,24 +148,24 @@
       }) }}
 
       {% call locationWrapper({
-        label: 'What is your location?',
+        label: 'What is your location? Use your prefered input method',
         hook: 'location-form',
         class: 'form__item--is-visible'
       }) %}
 
+        <div class="form__settings-location-wrapper">
         {{ button({
           element: 'button',
           label: 'Use your personal location',
           variant: 'secondary',
-          size: 'large',
           class: 'form__button u--is-hidden',
           hook: 'geo-api-location'
         }) }}
 
+        <div>
         {{ input({
           name: 'inputLocation',
           id: 'inputLocation',
-          label: 'Fill in a city name',
           hook: 'input-location',
           autofocus: true,
           class: 'form__item--is-visible display-block no-margin-bottom',
@@ -174,7 +174,7 @@
           value: values.inputLocation
         }) }}
 
-        <div js-hook-input-suggestions>
+        <div class="form__settings-suggestions" js-hook-input-suggestions>
           {% if locationSuggestions %}
 
               {% for location in locationSuggestions %}
@@ -187,6 +187,8 @@
               {% endfor %}
 
           {% endif %}
+        </div>
+        </div>
         </div>
       {% endcall %}
 
