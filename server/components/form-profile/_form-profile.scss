@@ -10,14 +10,14 @@
 
   .form__subtitle {
     font-size: $font-size-h4;
-    margin-bottom: $global-spacing * 2;
+    margin-bottom: $global-spacing-sm;
   }
 
   .form__item {
-    margin-bottom: $global-spacing * 4;
+    margin-bottom: $global-spacing-md;
 
     .input__label {
-      margin-bottom: $global-spacing * 2;
+      margin-bottom: $global-spacing-sm;
     }
 
   }
