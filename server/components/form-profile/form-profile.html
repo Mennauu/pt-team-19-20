@@ -126,6 +126,42 @@
 
     {% endcall %}
 
+    {{ input({
+      label: 'What is your favorite new song?',
+      name: 'song',
+      id: 'song',
+      value: data.song
+    }) }}
+
+    {{ input({
+      label: 'By which artist?',
+      name: 'artist',
+      id: 'artist',
+      value: data.artist
+    }) }}
+
+    {% call select({
+        label: 'And genre?',
+        name: 'genre',
+        hook: 'select-genre'
+      }) %}
+
+        {{ option({
+          selected: true,
+          disabled: true,
+          value: data.genre
+        }) }}
+
+        {% for genre in genres %}
+
+          {{ option({
+            value: genre
+          }) }}
+
+        {% endfor %}
+
+      {% endcall %}
+
   {{ button({
     element: 'button',
     label: 'Submit and start journey',
