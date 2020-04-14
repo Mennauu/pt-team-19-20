@@ -29,6 +29,28 @@ export const profile = async (req, res) => {
       const matches = await User.find({ _id: { $in: req.user.matched } })
       const matchName = matches.map(match => match.username)
 
+      const deg2rad = deg => deg * (Math.PI / 180)
+      const getDistanceFromLatLonInKm = (lat1, lon1, lat2, lon2) => {
+        const R = 6371 // Radius of the earth in km
+        const dLat = deg2rad(lat2 - lat1) // deg2rad below
+        const dLon = deg2rad(lon2 - lon1)
+        const a =
+          Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+          Math.cos(deg2rad(lat1)) *
+            Math.cos(deg2rad(lat2)) *
+            Math.sin(dLon / 2) *
+            Math.sin(dLon / 2)
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
+        const d = R * c // Distance in km
+        return Math.round(Number(d.toFixed(1)) + 1)
+      }
+
+      const newDistance = () => {
+        const { latitude: yourLat, longitude: yourLong } = loggedInUser.location
+        const { latitude: theirLat, longitude: theirLong } = profile.location
+        return getDistanceFromLatLonInKm(yourLat, yourLong, theirLat, theirLong)
+      }
+
       res.render('profile', {
         data: profile,
         removeButton: matchName.includes(username) ? true : false,
@@ -38,6 +60,7 @@ export const profile = async (req, res) => {
         id: req.user.id,
         username: req.user.username,
         festivals: await festivals(),
+        distance: `${newDistance()}km`,
         avatar: req.user.avatar || avatar,
         name: req.user.name || req.user.username,
       })
