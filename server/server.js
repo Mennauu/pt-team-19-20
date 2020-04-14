@@ -17,7 +17,8 @@ import { loginFail, loginSucces } from './data/messages.json'
 import auth from './middleware/authentication/auth.js'
 
 const shrinkRay = require('shrink-ray-current')
-const serve = require('./middleware/headers/serve.js')
+const type = require('./middleware/headers/type.js')
+const encoding = require('./middleware/headers/encoding.js')
 const route = require('./routes/routeHandler.js')
 const upload = multer({ dest: 'server/assets/uploads/' })
 const app = express()
@@ -42,8 +43,8 @@ app.use((req, res, next) => {
   next()
 })
 
-// Middleware for serving correct content type header
-app.get(['*.js', '*.css'], serve.serveContentTypes)
+// Middleware for serving correct content type and encoding header
+app.get(['*.js', '*.css'], type.setContentType, encoding.setContentEncoding)
 
 // Brotli/GZIP HTML file compression
 app.use(

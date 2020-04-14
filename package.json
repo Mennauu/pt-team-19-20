@@ -54,6 +54,7 @@
     "nunjucks": "^3.2.0",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
+    "path": "^0.12.7",
     "puppeteer": "^2.1.1",
     "range-inclusive": "^1.0.2",
     "shrink-ray-current": "^4.1.2",
