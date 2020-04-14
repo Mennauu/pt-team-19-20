@@ -10,9 +10,6 @@ const userSchema = new mongoose.Schema({
   attraction: String,
   fromAge: Number,
   toAge: Number,
-  song: String,
-  artist: String,
-  genre: String,
   avatar: String,
   images: [],
   firstVisit: Boolean,
@@ -28,7 +25,7 @@ const userSchema = new mongoose.Schema({
   matched: [],
 })
 
-userSchema.pre('save', function (next) {
+userSchema.pre('save', function(next) {
   if (!this.isModified('password')) return next()
 
   this.password = bcrypt.hashSync(this.password, bcrypt.genSaltSync(10))
