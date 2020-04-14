@@ -16,32 +16,29 @@
 
 {% call form({
   method: 'POST',
-  enctype: 'multipart/form-data',
   action: '/update-profile',
+  class: 'form__profile',
   title: 'Hello ' +  username + '.',
-  subtitle: 'Change your user profile.'
+  subtitle: 'Change your profile.'
 }) %}
 
-  {% call fieldset({ legend: 'General information', sronly: true }) %}
+  {% call fieldset({ legend: 'Main personal information', sronly: true }) %}
 
     {{ input({
       name: 'name',
       id: 'name',
-      label: 'Name?',
+      label: 'Name',
       autofocus: true,
       maxlength: '256',
       placeholder: 'Robin',
       value: data.name
     }) }}
 
-    <div class="form__settings--pe" js-hook-form-settings-pe>
-
       {{ input({
         name: 'age',
         id: 'age',
         label: 'Age',
         hook: 'input-age',
-        class: 'form__item--is-visible',
         type: 'text',
         placeholder: '26',
         pattern: '\\d*',
@@ -51,29 +48,28 @@
 
       {% call radioWrapper({
         label: 'And your gender?',
-        hook: 'gender-form',
-        class: 'form__item--is-visible'
+        hook: 'gender-form'
       }) %}
 
         {{ radio({
           name: 'gender',
           value: 'Male',
           image: '/assets/images/male.png',
-          checked: values.gender
+          checked: data.gender
         }) }}
 
         {{ radio({
           name: 'gender',
           value: 'Female',
           image: '/assets/images/female.png',
-          checked: values.gender
+          checked: data.gender
         }) }}
 
         {{ radio({
           name: 'gender',
           value: 'Any',
           image: '/assets/images/gender.png',
-          checked: values.gender
+          checked: data.gender
         }) }}
 
       {% endcall %}
@@ -84,29 +80,28 @@
 
       {% call radioWrapper({
         label: "Who are you looking for?",
-        hook: 'looking-form',
-        class: 'form__item--is-visible'
+        hook: 'looking-form'
       }) %}
 
         {{ radio({
           name: 'attraction',
           value: 'Males',
           image: '/assets/images/male.png',
-          checked: values.attraction
+          checked: data.attraction
         }) }}
 
         {{ radio({
           name: 'attraction',
           value: 'Females',
           image: '/assets/images/female.png',
-          checked: values.attraction
+          checked: data.attraction
         }) }}
 
         {{ radio({
           name: 'attraction',
           value: 'Anyone',
           image: '/assets/images/gender.png',
-          checked: values.attraction
+          checked: data.attraction
         }) }}
 
       {% endcall %}
@@ -117,9 +112,8 @@
         min: '18',
         max: '99',
         name: 'Age',
-        class: 'form__item--is-visible',
-        fromAge: values.fromAge,
-        toAge: values.toAge
+        fromAge: data.fromAge,
+        toAge: data.toAge
       }) }}
 
       {% if error %}
@@ -132,122 +126,12 @@
 
     {% endcall %}
 
-    {% call fieldset({ legend: 'Secondary personal information', sronly: true }) %}
-
-      {{ upload({
-        name: 'avatar',
-        id: 'avatar',
-        label: 'Almost there. How do you look?',
-        hook: 'input-avatar',
-        class: 'form__item--is-visible',
-        accept: 'image/*'
-      }) }}
-
-      {% call locationWrapper({
-        label: 'What is your location?',
-        hook: 'location-form',
-        class: 'form__item--is-visible'
-      }) %}
-
-        {{ button({
-          element: 'button',
-          label: 'Use your personal location',
-          variant: 'secondary',
-          size: 'large',
-          class: 'form__button u--is-hidden',
-          hook: 'geo-api-location'
-        }) }}
-
-        {{ input({
-          name: 'inputLocation',
-          id: 'inputLocation',
-          label: 'Fill in a city name',
-          hook: 'input-location',
-          autofocus: true,
-          class: 'form__item--is-visible display-block no-margin-bottom',
-          maxlength: '50',
-          placeholder: 'Amsterdam',
-          value: values.inputLocation
-        }) }}
-
-        <div js-hook-input-suggestions>
-          {% if locationSuggestions %}
-
-              {% for location in locationSuggestions %}
-
-                {{ radio({
-                  name: 'inputSuggestion',
-                  value: location.woonplaats
-                }) }}
-
-              {% endfor %}
-
-          {% endif %}
-        </div>
-      {% endcall %}
-
-      {{ input({
-        name: 'song',
-        id: 'song',
-        label: 'What is your favorite song?',
-        placeholder: 'The A Team',
-        hook: 'input-song',
-        class: 'form__item--is-visible'
-      }) }}
-
-      {{ input({
-        name: 'artist',
-        id: 'artist',
-        label: 'By which artist?',
-        placeholder: 'Ed Sheeran',
-        class: 'form__item--is-visible',
-        hook: 'input-artist'
-      }) }}
-
-      {% call select({
-        label: 'And genre?',
-        name: 'genre',
-        class: 'form__item--is-visible',
-        hook: 'select-genre'
-      }) %}
-
-        {{ option({
-          selected: true,
-          disabled: true,
-          value: 'Select a genre'
-        }) }}
-
-        {% for genre in genres %}
-
-          {{ option({
-            value: genre
-          }) }}
-
-        {% endfor %}
-
-      {% endcall %}
-
-    {% endcall %}
-
-  </div>
-
-  {{ button({
-    element: 'button',
-    label: 'Next',
-    variant: 'secondary',
-    arrowRight: true,
-    class: 'form__button form__settings-next u--is-hidden',
-    hook: 'next-button'
-  }) }}
-
   {{ button({
     element: 'button',
     label: 'Submit and start journey',
     variant: 'green',
     size: 'large',
-    class: 'form__button form__settings-submit',
-    type: 'submit',
-    hook: 'submit-button'
+    type: 'submit'
   }) }}
 
 {% endcall %}
