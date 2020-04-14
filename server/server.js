@@ -101,6 +101,7 @@ app.get('/login', route.login)
 app.get('/logout', route.logout)
 app.get('/register', route.register)
 app.get('/home', route.home)
+app.get('/settings', route.settings)
 app.get('/:id', route.profile)
 app.get('*', route.error)
 
