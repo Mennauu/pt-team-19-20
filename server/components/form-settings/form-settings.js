@@ -105,18 +105,7 @@ class FormSettings {
   bindEvents() {
     this.form.addEventListener('submit', () => this.validationEvents(event))
     this.nextButton.addEventListener('click', () => this.formHandler())
-    this.inputName.addEventListener(
-      'keydown',
-      debounce(element => {
-        this.enableButton(element)
-      }, 200),
-    )
-    this.inputAge.addEventListener(
-      'keydown',
-      debounce(element => {
-        this.enableButton(element)
-      }, 200),
-    )
+
     this.inputLocation.addEventListener(
       'input',
       debounce(element => {
@@ -167,6 +156,9 @@ class FormSettings {
               }
             }, 0)
           }
+        }
+        if (i === 6) {
+          this.formItems[i + 1].classList.add(CLASS_INPUT_IS_VISIBLE)
         }
 
         if (item.classList.contains('c-radio')) {
