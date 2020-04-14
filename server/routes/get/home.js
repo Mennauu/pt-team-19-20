@@ -116,14 +116,14 @@ const filterAllData = data => {
   return data.map(filterSingleData)
 }
 
-const filterSingleData = ({ _id, username, avatar, age, gender, level, location }) => {
+const filterSingleData = ({ _id, username, avatar, age, gender, location, genre }) => {
   return {
     id: _id,
     username,
     avatar,
     age,
     gender,
-    level,
+    genre,
     location,
   }
 }
