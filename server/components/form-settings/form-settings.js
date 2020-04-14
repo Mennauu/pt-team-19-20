@@ -105,18 +105,7 @@ class FormSettings {
   bindEvents() {
     this.form.addEventListener('submit', () => this.validationEvents(event))
     this.nextButton.addEventListener('click', () => this.formHandler())
-    this.inputName.addEventListener(
-      'keydown',
-      debounce(element => {
-        this.enableButton(element)
-      }, 200),
-    )
-    this.inputAge.addEventListener(
-      'keydown',
-      debounce(element => {
-        this.enableButton(element)
-      }, 200),
-    )
+
     this.inputLocation.addEventListener(
       'input',
       debounce(element => {
@@ -127,6 +116,12 @@ class FormSettings {
       'click',
       debounce(element => {
         this.getGeoLocation(element)
+      }, 200),
+    )
+    this.inputSuggestions.addEventListener(
+      'click',
+      debounce(element => {
+        this.suggestionHandler(element)
       }, 200),
     )
 
@@ -167,6 +162,9 @@ class FormSettings {
               }
             }, 0)
           }
+        }
+        if (i === 6) {
+          this.formItems[i + 1].classList.add(CLASS_INPUT_IS_VISIBLE)
         }
 
         if (item.classList.contains('c-radio')) {
@@ -322,11 +320,9 @@ class FormSettings {
     const maxFiveMatchingResults = findMatchingCityResults(value).slice(0, 5)
 
     if (value.length >= 2 && maxFiveMatchingResults.length) {
-      console.log(maxFiveMatchingResults)
       this.inputSuggestions.innerHTML = ''
 
       maxFiveMatchingResults.forEach(item => {
-        console.log(item)
         this.inputSuggestions.insertAdjacentHTML(
           'beforeend',
           `<label class="" for="${item.woonplaats}">
@@ -335,7 +331,14 @@ class FormSettings {
           </label>`,
         )
       })
+      this.nextButton.removeAttribute('disabled')
     }
+  }
+
+  suggestionHandler(element) {
+    const value = element.target.value
+    this.inputLocation.value = value
+    this.inputSuggestions.innerHTML = ''
   }
 
   async getGeoLocation(element) {
@@ -354,6 +357,7 @@ class FormSettings {
 
     if (!data) {
       element.target.innerText = 'Location permission blocked...'
+      this.nextButton.removeAttribute('disabled')
       return
     }
 
@@ -369,6 +373,7 @@ class FormSettings {
     )
 
     element.target.innerText = 'Location retreived'
+    this.nextButton.removeAttribute('disabled')
   }
 
   submitForm() {

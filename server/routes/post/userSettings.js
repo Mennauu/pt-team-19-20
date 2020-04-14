@@ -22,7 +22,6 @@ export const userSettings = (req, res) => {
     attraction,
     fromAge,
     toAge,
-    level,
     inputLocation,
     inputSuggestion,
     geoLocation,
@@ -74,34 +73,27 @@ export const userSettings = (req, res) => {
   if (gender === '') {
     req.flash('error', message.chooseGender)
 
-    return res.redicect('back')
+    return res.redirect('back')
   }
 
   // Check if an attraction has been selected
   if (attraction === '') {
     req.flash('error', message.chooseAttraction)
 
-    return res.redicect('back')
+    return res.redirect('back')
   }
 
   // Check if upload contains a valid image
   if (!req.file) {
     req.flash('error', message.setAvatar)
 
-    return res.redicect('back')
+    return res.redirect('back')
   } else {
     if (!isImage(req.file.originalname)) {
       req.flash('error', message.setRealImage)
 
-      return res.redicect('back')
+      return res.redirect('back')
     }
-  }
-
-  // Check if an attraction has been selected
-  if (level === '') {
-    req.flash('error', message.chooseLevel)
-
-    return res.redicect('back')
   }
 
   if (inputLocation && !inputSuggestion && !geoLocation) {
@@ -146,7 +138,9 @@ const updateUserSettings = (req, res) => {
     attraction,
     fromAge,
     toAge,
-    level,
+    song,
+    artist,
+    genre,
     inputLocation,
     inputSuggestion,
     geoLocation,
@@ -182,7 +176,9 @@ const updateUserSettings = (req, res) => {
       fromAge,
       toAge,
       avatar: `assets/uploads/${req.file.filename}`,
-      level,
+      song,
+      artist,
+      genre,
       location: location(),
       firstVisit: false,
     },

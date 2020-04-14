@@ -94,6 +94,21 @@
   animation: delayedFadeIn 4.22s;
 }
 
+.form__settings-location-wrapper{
+  display: flex;
+  align-items: baseline;
+}
+
+.form__settings-location-wrapper .form__button{
+  min-width: 20rem;
+  margin-right: 2rem;
+}
+
+.form__settings-suggestions{
+  display: flex;
+  flex-flow: column;
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;
