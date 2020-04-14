@@ -5,7 +5,6 @@ import musicGenres from '../../data/genres.json'
 import User from '../../database/models/user.js'
 
 export const generateRandomFemaleUsers = () => {
-  const levels = ['Noob', 'Advanced', 'God']
   const testFolder = 'server/assets/uploads/females/'
 
   const images = fs
