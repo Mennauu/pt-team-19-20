@@ -32,7 +32,46 @@ export const home = async (req, res) => {
           const filteredResults = results.filter(
             match => !req.user.liked.includes(match._id) && !req.user.disliked.includes(match._id),
           )
+          const deg2rad = deg => deg * (Math.PI / 180)
+          const getDistanceFromLatLonInKm = (lat1, lon1, lat2, lon2) => {
+            const R = 6371 // Radius of the earth in km
+            const dLat = deg2rad(lat2 - lat1) // deg2rad below
+            const dLon = deg2rad(lon2 - lon1)
+            const a =
+              Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+              Math.cos(deg2rad(lat1)) *
+                Math.cos(deg2rad(lat2)) *
+                Math.sin(dLon / 2) *
+                Math.sin(dLon / 2)
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
+            const d = R * c // Distance in km
+            return Math.round(Number(d.toFixed(1)) + 1)
+          }
+
           const persons = filterAllData(filteredResults)
+
+          const convertedPersons = persons.map(their => {
+            const obj = their
+            const newDistance = () => {
+              const { latitude: yourLat, longitude: yourLong } = req.user.location
+              const { latitude: theirLat, longitude: theirLong } = their.location
+              return getDistanceFromLatLonInKm(yourLat, yourLong, theirLat, theirLong)
+            }
+            obj.location = newDistance()
+            return obj
+          })
+
+          const compare = (a, b) => {
+            if (a.location < b.location) {
+              return -1
+            }
+            if (a.location > b.location) {
+              return 1
+            }
+            return 0
+          }
+
+          convertedPersons.sort(compare)
 
           const matches = await User.find({ _id: { $in: req.user.matched } }, results => results)
 
@@ -47,7 +86,7 @@ export const home = async (req, res) => {
             authenticated: true,
             firstvisit: req.user.firstVisit,
             name: req.user.name || req.user.username,
-            possibleMatches: persons,
+            possibleMatches: convertedPersons,
             matched: matches || [],
             matcheduser: matchedUser,
             matchedavatar: matchedAvatar,
@@ -77,13 +116,14 @@ const filterAllData = data => {
   return data.map(filterSingleData)
 }
 
-const filterSingleData = ({ _id, username, avatar, age, gender, level }) => {
+const filterSingleData = ({ _id, username, avatar, age, gender, location, genre }) => {
   return {
     id: _id,
     username,
     avatar,
     age,
     gender,
-    level,
+    genre,
+    location,
   }
 }

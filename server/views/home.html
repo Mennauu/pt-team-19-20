@@ -40,8 +40,8 @@
 
               {% for person in possibleMatches %}
 
-                {%- if person.id 
-                    and person.avatar 
+                {%- if person.id
+                    and person.avatar
                     and person.username
                     and person.age %}
 
@@ -50,6 +50,8 @@
                     image: person.avatar,
                     username: person.username,
                     age: person.age,
+                    genre: person.genre,
+                    location: person.location,
                     options: true
                   }) }}
 
@@ -84,7 +86,7 @@
                   username: person.username,
                   age: person.age
                 }) }}
-              
+
               {% endfor %}
 
             {% else %}

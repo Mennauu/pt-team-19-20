@@ -21,8 +21,8 @@
 
             {%- if data %}
 
-              {%- if data.id 
-                  and data.avatar 
+              {%- if data.id
+                  and data.avatar
                   and data.username
                   and data.age %}
 
@@ -57,21 +57,21 @@
           {% call matchWrapper({
             subtitle: 'Profile'
           }) %}
-         
+
           {%- if data %}
 
             <h2>{{ data.name }}</h2>
 
             <h3>{{ data.age }}</h3>
 
-            <h3>10 km</h3>
+            <h3>{{ distance }}</h3>
 
             <h4>Songs</h4>
 
             {% call list({
               hook: 'song-wrapper'
             }) %}
-            
+
             {% endcall %}
 
             <h4>Festivals</h4>
@@ -89,11 +89,11 @@
             {% endif -%}
 
           {% endif -%}
-         
+
           {% endcall %}
 
           {% endif -%}
-        
+
          </section>
 
       </div>
