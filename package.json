@@ -1,8 +1,8 @@
 {
-  "name": "be-course-19-20-menno",
+  "name": "pt-team-19-20",
   "version": "1.0.0",
-  "author": "Menno de Vries",
-  "description": "Backend · 2019-2020 · University of Amsterdam assignment",
+  "author": "Menno de Vries, Chelsea Doeleman, Robin Stut, Ben Langenberg",
+  "description": "Project Tech · 2019-2020 · University of Amsterdam team assignment",
   "license": "GPL-3.0",
   "engines": {
     "node": "10.16.3"
