@@ -78,6 +78,12 @@
 
             {% endif -%}
 
+            {%- if userProfile === true %}
+
+              <a href="/settings">Change profile settings</a>
+
+            {% endif -%}
+
           {% endif -%}
          
           {% endcall %}

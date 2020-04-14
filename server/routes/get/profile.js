@@ -24,6 +24,7 @@ export const profile = async (req, res) => {
       res.render('profile', {
         data: profile,
         removeButton: matchName.includes(username) ? true : false,
+        userProfile: req.user.id === id ? true : false,
         navigation: dataNavigation,
         id: req.user.id,
         username: req.user.username,
