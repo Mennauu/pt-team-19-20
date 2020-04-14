@@ -1,6 +1,7 @@
 import fs from 'fs'
 import random_name from 'node-random-name'
 
+import musicGenres from '../../data/genres.json'
 import User from '../../database/models/user.js'
 
 export const generateRandomFemaleUsers = () => {
@@ -17,6 +18,11 @@ export const generateRandomFemaleUsers = () => {
       const randomName = random_name({ first: true, gender: 'female' })
       const randomAge = Math.floor(Math.random() * 10) + 18
       const randomLevel = levels[Math.floor(Math.random() * levels.length)]
+      const randomLocation = {
+        latitude: 50 + Math.random() * 3.5,
+        longitude: 3 + Math.random() * 3.5,
+      }
+      const randomGenre = musicGenres[Math.floor(Math.random() * musicGenres.length)]
 
       const newUser = new User({
         username: randomName,
@@ -30,6 +36,10 @@ export const generateRandomFemaleUsers = () => {
         level: randomLevel,
         avatar: `/assets/uploads/females/${image}`,
         firstVisit: false,
+        location: randomLocation,
+        genre: randomGenre,
+        song: 'Various songs',
+        artist: 'Various artists',
       })
 
       User.findOne({ username: randomName }, (err, result) => {
