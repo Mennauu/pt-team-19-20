@@ -17,10 +17,8 @@ export const profile = async (req, res) => {
 
     if (profile) {
       const matches = await User.find({ _id: { $in: req.user.matched } })
-      const matchName = matches.map(match => {
-        const name = match.username
-        return name
-      })
+      const matchName = matches.map(match => match.username)
+
       res.render('profile', {
         data: profile,
         removeButton: matchName.includes(username) ? true : false,
