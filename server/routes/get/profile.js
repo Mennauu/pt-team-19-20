@@ -1,4 +1,5 @@
 import dataNavigation from '../../data/navigation.json'
+import Festivals from '../../database/models/festival.js'
 import User from '../../database/models/user.js'
 import genres from '../../data/genres.json'
 
@@ -10,6 +11,7 @@ export const profile = async (req, res) => {
   } else {
     let profile
     const avatar = '/assets/images/avatar.svg'
+    const loggedInUser = await User.findById(req.session.passport.user)
     try {
       profile = await User.findOne({ _id: id, username: username })
     } catch (e) {
@@ -17,11 +19,17 @@ export const profile = async (req, res) => {
     }
 
     if (profile) {
+      const bothLikeSameGenre = profile.genre === loggedInUser.genre
+      const festivals = async () => {
+        if (!bothLikeSameGenre) {
+          return null
+        }
+        const data = await Festivals.findOne({})
+        return data.festivals.filter(user => user.genre === profile.genre)
+      }
       const matches = await User.find({ _id: { $in: req.user.matched } })
-      const matchName = matches.map(match => {
-        const name = match.username
-        return name
-      })
+      const matchName = matches.map(match => match.username)
+
       res.render('profile', {
         data: profile,
         removeButton: matchName.includes(username) ? true : false,
@@ -30,6 +38,7 @@ export const profile = async (req, res) => {
         authenticated: true,
         id: req.user.id,
         username: req.user.username,
+        festivals: await festivals(),
         avatar: req.user.avatar || avatar,
         name: req.user.name || req.user.username,
         genres,

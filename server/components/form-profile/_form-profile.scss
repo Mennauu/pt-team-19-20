@@ -18,4 +18,28 @@
 
 .form__title {
   margin-top: 10px;
+.form__profile {
+  max-width: 100%;
+  padding: 20px;
+  color: $color-black;
+  overflow:hidden;
+
+  .form__title {
+    font-size: $font-size-h3;
+  }
+
+  .form__subtitle {
+    font-size: $font-size-h4;
+    margin-bottom: $global-spacing-sm;
+  }
+
+  .form__item {
+    margin-bottom: $global-spacing-md;
+
+    .input__label {
+      margin-bottom: $global-spacing-sm;
+    }
+
+  }
+
 }

@@ -5,7 +5,6 @@ import User from '../../database/models/user.js'
 
 export const updateProfile = (req, res) => {
   const { name, age, gender, attraction, fromAge, toAge, song, artist, genre } = req.body
-  console.log(name, age, gender, attraction, fromAge, toAge, song, artist, genre)
 
   // Validate name length
   if (!validator.isByteLength(name, { min: 2, max: 256 })) {
