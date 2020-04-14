@@ -1,0 +1,25 @@
+{% from '../components/form-elements/form-message/form-message.html' import message %}
+
+{% extends 'rev-layouts/default.html' %}
+
+{% block content %}
+
+    <div class="o-container">
+
+      <div class="o-grid">
+
+          <section class="o-col-8--md u-pre-2--md u--max-width">
+
+            {% if(values) %}
+
+                {% include '../components/form-settings/form-settings.html' %}
+
+            {% endif %}
+
+          </section>
+
+        </div>
+
+    </div>
+
+{% endblock %}
