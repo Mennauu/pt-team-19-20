@@ -64,3 +64,28 @@ $form-radio-transition-speed: 300ms;
 .form__radio-title {
   transition: transform $form-radio-transition-speed, background-color $form-radio-transition-speed;
 }
+
+
+.form__radio--is-small {
+  padding: 15px;
+  min-width: 110px;
+  flex-wrap: wrap;
+
+  .form__radio {
+    @include sr-only;
+
+    &:checked + .form__radio-background {
+      background-color: $color-primary;
+    }
+  }
+
+  .form__radio-image {
+    width: 32px;
+    height: 32px;
+  }
+
+  .form__radio-title {
+    font-size: 16px;
+  }
+
+}
