@@ -118,6 +118,12 @@ class FormSettings {
         this.getGeoLocation(element)
       }, 200),
     )
+    this.inputSuggestions.addEventListener(
+      'click',
+      debounce(element => {
+        this.suggestionHandler(element)
+      }, 200),
+    )
 
     for (const input of this.textInputs) {
       input.addEventListener(
@@ -327,6 +333,12 @@ class FormSettings {
       })
       this.nextButton.removeAttribute('disabled')
     }
+  }
+
+  suggestionHandler(element) {
+    const value = element.target.value
+    this.inputLocation.value = value
+    this.inputSuggestions.innerHTML = ''
   }
 
   async getGeoLocation(element) {
