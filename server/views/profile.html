@@ -44,6 +44,16 @@
 
          <section class="o-col-4--md match__background">
 
+          {%- if isAuthenticated === true %}
+
+            {% if(data) %}
+
+              {% include '../components/form-profile/form-profile.html' %}
+
+            {% endif %}
+
+          {% else %}
+
           {% call matchWrapper({
             subtitle: 'Profile'
           }) %}
@@ -78,16 +88,12 @@
 
             {% endif -%}
 
-            {%- if userProfile === true %}
-
-              <a href="/settings">Change profile settings</a>
-
-            {% endif -%}
-
           {% endif -%}
          
           {% endcall %}
-         
+
+          {% endif -%}
+        
          </section>
 
       </div>
