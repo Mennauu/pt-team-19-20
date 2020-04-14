@@ -5,7 +5,6 @@ import musicGenres from '../../data/genres.json'
 import User from '../../database/models/user.js'
 
 export const generateRandomFemaleUsers = () => {
-  const levels = ['Noob', 'Advanced', 'God']
   const testFolder = 'server/assets/uploads/females/'
 
   const images = fs
@@ -17,11 +16,11 @@ export const generateRandomFemaleUsers = () => {
     setTimeout(() => {
       const randomName = random_name({ first: true, gender: 'female' })
       const randomAge = Math.floor(Math.random() * 10) + 18
+      const randomGenre = musicGenres[Math.floor(Math.random() * musicGenres.length)]
       const randomLocation = {
         latitude: 50 + Math.random() * 3.5,
         longitude: 3 + Math.random() * 3.5,
       }
-      const randomGenre = musicGenres[Math.floor(Math.random() * musicGenres.length)]
 
       const newUser = new User({
         username: randomName,
@@ -50,7 +49,6 @@ export const generateRandomFemaleUsers = () => {
 }
 
 export const generateRandomMaleUsers = () => {
-  const levels = ['Noob', 'Advanced', 'God']
   const testFolder = 'server/assets/uploads/males/'
 
   const images = fs
@@ -62,8 +60,11 @@ export const generateRandomMaleUsers = () => {
     setTimeout(() => {
       const randomName = random_name({ first: true, gender: 'male' })
       const randomAge = Math.floor(Math.random() * 10) + 18
-      const randomLevel = levels[Math.floor(Math.random() * levels.length)]
-
+      const randomGenre = musicGenres[Math.floor(Math.random() * musicGenres.length)]
+      const randomLocation = {
+        latitude: 50 + Math.random() * 3.5,
+        longitude: 3 + Math.random() * 3.5,
+      }
       const newUser = new User({
         username: randomName,
         password: '123456',
@@ -73,9 +74,12 @@ export const generateRandomMaleUsers = () => {
         attraction: 'Females',
         fromAge: 10,
         toAge: 30,
-        level: randomLevel,
         avatar: `/assets/uploads/males/${image}`,
         firstVisit: false,
+        location: randomLocation,
+        genre: randomGenre,
+        song: 'Various songs',
+        artist: 'Various artists',
       })
 
       User.findOne({ username: randomName }, (err, result) => {

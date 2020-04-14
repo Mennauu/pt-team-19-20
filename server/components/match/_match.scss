@@ -63,6 +63,7 @@ $match-transition-speed: 600ms;
   left: 0;
   bottom: 0;
   padding: $global-spacing-sm;
+  color: $color-white;
 }
 
 .match__details-wrapper {
@@ -74,6 +75,10 @@ $match-transition-speed: 600ms;
       font-weight: $font-weight-bold;
       font-family: $font-stack-secondary;
       margin-right: $global-spacing;
+    }
+
+    &::first-letter {
+      text-transform: uppercase;
     }
   }
 }

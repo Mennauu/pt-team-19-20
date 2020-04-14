@@ -22,7 +22,6 @@ export const userSettings = (req, res) => {
     attraction,
     fromAge,
     toAge,
-    level,
     inputLocation,
     inputSuggestion,
     geoLocation,
@@ -97,13 +96,6 @@ export const userSettings = (req, res) => {
     }
   }
 
-  // Check if an attraction has been selected
-  if (level === '') {
-    req.flash('error', message.chooseLevel)
-
-    return res.redirect('back')
-  }
-
   if (inputLocation && !inputSuggestion && !geoLocation) {
     // Check if location contains letters, spaces, dashes and high comma only
     if (!validator.matches(inputLocation, /^[a-zA-Z\s'-]*$/)) {
@@ -146,7 +138,9 @@ const updateUserSettings = (req, res) => {
     attraction,
     fromAge,
     toAge,
-    level,
+    song,
+    artist,
+    genre,
     inputLocation,
     inputSuggestion,
     geoLocation,
@@ -182,7 +176,9 @@ const updateUserSettings = (req, res) => {
       fromAge,
       toAge,
       avatar: `assets/uploads/${req.file.filename}`,
-      level,
+      song,
+      artist,
+      genre,
       location: location(),
       firstVisit: false,
     },
