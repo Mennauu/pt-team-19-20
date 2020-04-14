@@ -20,15 +20,12 @@ const userSchema = new mongoose.Schema({
     latitude: Number,
     longitude: Number,
   },
-  genre: String,
-  song: String,
-  artist: String,
   liked: [],
   disliked: [],
   matched: [],
 })
 
-userSchema.pre('save', function (next) {
+userSchema.pre('save', function(next) {
   if (!this.isModified('password')) return next()
 
   this.password = bcrypt.hashSync(this.password, bcrypt.genSaltSync(10))
