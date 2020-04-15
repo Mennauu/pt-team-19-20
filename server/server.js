@@ -117,7 +117,7 @@ const logInLimit = rateLimit({
   },
 })
 
-// Rate limit on creating accounts
+// Rate limit on endpoints
 app.use('/register-user', createAccountLimiter)
 
 // GET routes
