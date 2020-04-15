@@ -1,6 +1,7 @@
 {% from '../components/image/image.html' import image %}
 {% from '../components/intro/intro.html' import intro %}
 {% from '../components/match/match.html' import match %}
+{% from '../components/festival-card/festival-card.html' import festivalCard %}
 {% from '../components/list/list.html' import list %}
 {% from '../components/match/match-wrapper.html' import matchWrapper %}
 {% from '../components/form-elements/form-message/form-message.html' import message %}
@@ -24,6 +25,7 @@
               {%- if data.id
                   and data.avatar
                   and data.username
+                  and data.genre
                   and data.age %}
 
                 {{ match({
@@ -31,6 +33,8 @@
                   image: data.avatar,
                   username: data.username,
                   age: data.age,
+                  location: distance,
+                  genre: data.genre,
                   options: false
                 }) }}
 
@@ -64,23 +68,25 @@
 
             <h3>{{ data.age }}</h3>
 
-            <h3>{{ distance }}</h3>
+            <h3>{{ distance }}km</h3>
 
-            <h4>Songs</h4>
+            {% if festivals %}
 
-            {% call list({
-              hook: 'song-wrapper'
+            <h3>Festivals</h3>
+
+            {% for festival in festivals %}
+
+            {% call festivalCard({
+              festivalName: festival.data.festivalName,
+              location: festival.data.location.address,
+              genre: festival.genre
             }) %}
 
             {% endcall %}
 
-            <h4>Festivals</h4>
+            {% endfor %}
 
-            {% call list({
-              hook: 'festival-wrapper'
-            }) %}
-
-            {% endcall %}
+            {% endif %}
 
             {%- if removeButton === true %}
 

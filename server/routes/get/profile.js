@@ -1,7 +1,7 @@
+import genres from '../../data/genres.json'
 import dataNavigation from '../../data/navigation.json'
 import Festivals from '../../database/models/festival.js'
 import User from '../../database/models/user.js'
-import genres from '../../data/genres.json'
 
 export const profile = async (req, res) => {
   const { id } = req.params
@@ -61,7 +61,7 @@ export const profile = async (req, res) => {
         id: req.user.id,
         username: req.user.username,
         festivals: await festivals(),
-        distance: `${newDistance()}km`,
+        distance: `${newDistance()}`,
         avatar: req.user.avatar || avatar,
         name: req.user.name || req.user.username,
         genres,
