@@ -98,14 +98,12 @@ app.use(
 )
 
 // Create account limit
-export const createAccountLimiter = rateLimit({
+const createAccountLimiter = rateLimit({
   windowMs: 60 * 60 * 1000 * 24, // Time window of 24 hours
   max: 3, // Limit each ip to 3 requests per windowMS (24 hours)
   delayMs: 0, // Delaying is disabled - full speed until requests by ip have reached the limit
   handler: function(req, res) {
-    res.render('error', {
-      status: 429,
-    })
+    res.render('error')
   },
 })
 
