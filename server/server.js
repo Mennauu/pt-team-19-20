@@ -107,6 +107,16 @@ const createAccountLimiter = rateLimit({
   },
 })
 
+// Log in limit
+const logInLimit = rateLimit({
+  windowMs: 60 * 60 * 1000, // Time window of 1 hour
+  max: 100, // Limit each ip to 100 requests per windowMS (1 hour)
+  delayMs: 0, // Delaying is disabled - full speed until requests by ip have reached the limit
+  handler: function(req, res) {
+    res.render('error')
+  },
+})
+
 // Rate limit on creating accounts
 app.use('/register-user', createAccountLimiter)
 
@@ -127,6 +137,7 @@ app.post('/remove-match', route.removeMatch)
 app.post('/update-profile', route.updateProfile)
 app.post(
   '/login-authenticate',
+  logInLimit,
   auth.authenticate('local', {
     successRedirect: '/home',
     failureRedirect: '/login',
