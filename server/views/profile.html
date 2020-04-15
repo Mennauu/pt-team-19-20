@@ -2,6 +2,7 @@
 {% from '../components/intro/intro.html' import intro %}
 {% from '../components/match/match.html' import match %}
 {% from '../components/festival-card/festival-card.html' import festivalCard %}
+{% from '../components/music-card/music-card.html' import musicCard %}
 {% from '../components/list/list.html' import list %}
 {% from '../components/match/match-wrapper.html' import matchWrapper %}
 {% from '../components/form-elements/form-message/form-message.html' import message %}
@@ -69,6 +70,15 @@
             <h3>{{ data.age }}</h3>
 
             <h3>{{ distance }}km</h3>
+
+            <h3>Favourite song</h3>
+
+            {% call musicCard({
+              song: data.song,
+              artist: data.artist
+            }) %}
+
+            {% endcall %}
 
             {% if festivals %}
 
