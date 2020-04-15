@@ -1,11 +1,31 @@
 const isImage = require('is-image')
 import validator from 'validator'
 
+import cityLocations from '../../data/cityLocations.json'
 import message from '../../data/messages.json'
+import dataNavigation from '../../data/navigation.json'
 import User from '../../database/models/user.js'
 
+const findExactCity = value => {
+  return cityLocations.find(entry => entry.woonplaats === value)
+}
+
+const findMatchingCityResults = value => {
+  return cityLocations.filter(item => item.woonplaats.includes(value))
+}
+
 export const userSettings = (req, res) => {
-  const { name, age, gender, attraction, fromAge, toAge, level } = req.body
+  const {
+    name,
+    age,
+    gender,
+    attraction,
+    fromAge,
+    toAge,
+    inputLocation,
+    inputSuggestion,
+    geoLocation,
+  } = req.body
 
   // Validate name length
   if (!validator.isByteLength(name, { min: 2, max: 256 })) {
@@ -51,33 +71,99 @@ export const userSettings = (req, res) => {
 
   // Check if an gender has been selected
   if (gender === '') {
-    return this.errorHandler(message.chooseGender)
+    req.flash('error', message.chooseGender)
+
+    return res.redirect('back')
   }
 
   // Check if an attraction has been selected
   if (attraction === '') {
-    return this.errorHandler(message.chooseAttraction)
+    req.flash('error', message.chooseAttraction)
+
+    return res.redirect('back')
   }
 
   // Check if upload contains a valid image
   if (!req.file) {
-    return this.errorHandler(message.setAvatar)
+    req.flash('error', message.setAvatar)
+
+    return res.redirect('back')
   } else {
     if (!isImage(req.file.originalname)) {
-      return this.errorHandler(message.setRealImage)
+      req.flash('error', message.setRealImage)
+
+      return res.redirect('back')
     }
   }
 
-  // Check if an attraction has been selected
-  if (level === '') {
-    return this.errorHandler(message.chooseLevel)
+  if (inputLocation && !inputSuggestion && !geoLocation) {
+    // Check if location contains letters, spaces, dashes and high comma only
+    if (!validator.matches(inputLocation, /^[a-zA-Z\s'-]*$/)) {
+      req.flash('error', message.locationPattern)
+      return res.redirect('back')
+    }
+
+    // check if inputLocation is exact in cityLocations
+    if (!findExactCity(inputLocation)) {
+      const matchingResults = findMatchingCityResults(inputLocation)
+
+      // Check if location has no matches
+      if (!matchingResults.length) {
+        // return this.errorHandler(message.locationMatchFail)
+        req.flash('error', message.locationMatchFail)
+        return res.redirect('back')
+      } else {
+        const maxFiveMatchingResults = matchingResults.slice(0, 5)
+
+        res.render('home', {
+          navigation: dataNavigation,
+          username: req.user.username,
+          authenticated: true,
+          firstvisit: req.user.firstVisit,
+          values: req.body,
+          locationSuggestions: maxFiveMatchingResults,
+        })
+      }
+    }
   }
 
   updateUserSettings(req, res)
 }
 
 const updateUserSettings = (req, res) => {
-  const { name, age, gender, attraction, fromAge, toAge, level } = req.body
+  const {
+    name,
+    age,
+    gender,
+    attraction,
+    fromAge,
+    toAge,
+    song,
+    artist,
+    genre,
+    inputLocation,
+    inputSuggestion,
+    geoLocation,
+  } = req.body
+
+  const location = () => {
+    // GEO location
+    if (geoLocation) {
+      return JSON.parse(geoLocation)
+    }
+    // Suggested city location
+    if (findExactCity(inputSuggestion)) {
+      return {
+        latitude: findExactCity(inputSuggestion).latitude,
+        longitude: findExactCity(inputSuggestion).longitude,
+      }
+    }
+    // Full city name location
+    return {
+      latitude: findExactCity(inputLocation).latitude,
+      longitude: findExactCity(inputLocation).longitude,
+    }
+  }
 
   User.updateOne(
     { _id: req.session.passport.user },
@@ -90,7 +176,10 @@ const updateUserSettings = (req, res) => {
       fromAge,
       toAge,
       avatar: `assets/uploads/${req.file.filename}`,
-      level,
+      song,
+      artist,
+      genre,
+      location: location(),
       firstVisit: false,
     },
     (err, result) => {

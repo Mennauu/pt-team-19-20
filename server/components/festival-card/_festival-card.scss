@@ -1,0 +1,15 @@
+.festival__card {
+    background-color: $color-primary;
+    border-radius: 3px;
+    box-shadow: 0 5px 10px rgba($color-black, 0.15);
+    padding: 10px;
+    margin: $global-spacing-md 0;
+
+    h4 {
+        color: $color-white !important;
+    }
+    p {
+        object-fit: contain;
+        color: $color-black;
+    }
+}

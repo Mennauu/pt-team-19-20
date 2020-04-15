@@ -26,5 +26,7 @@
   "setAvatar": "Please set an image",
   "setRealImage": "Don't play games, choose an actual image!",
   "minAge": "The minimum age you can choose is 18, pervert.",
-  "maxAge": "The maximum age you can choose is 99, weirdo."
+  "maxAge": "The maximum age you can choose is 99, weirdo.",
+  "locationPattern": "Your location doesn't contain numbers or special characters...",
+  "locationMatchFail" : "Couldn't find this city, please try again."
 }

@@ -1,5 +1,6 @@
 {% from '../form-elements/form/form.html' import form %}
 {% from '../form-elements/form-radio-wrapper/form-radio-wrapper.html' import radioWrapper %}
+{% from '../form-elements/form-location-wrapper/form-location-wrapper.html' import locationWrapper %}
 {% from '../form-elements/form-input/form-input.html' import input %}
 {% from '../form-elements/form-message/form-message.html' import message %}
 {% from '../form-elements/form-notice/form-notice.html' import notice %}
@@ -33,7 +34,8 @@
       autofocus: true,
       class: 'form__item--is-visible form__item--first',
       maxlength: '256',
-      placeholder: 'Robin'
+      placeholder: 'Robin',
+      value: values.name
     }) }}
 
     <div class="form__settings--pe" js-hook-form-settings-pe>
@@ -47,7 +49,8 @@
         type: 'text',
         placeholder: '26',
         pattern: '\\d*',
-        maxlength: '2'
+        maxlength: '2',
+        value: values.age
       }) }}
 
       {% call radioWrapper({
@@ -59,19 +62,22 @@
         {{ radio({
           name: 'gender',
           value: 'Male',
-          image: '/assets/images/male.png'
+          image: '/assets/images/male.png',
+          checked: values.gender
         }) }}
 
         {{ radio({
           name: 'gender',
           value: 'Female',
-          image: '/assets/images/female.png'
+          image: '/assets/images/female.png',
+          checked: values.gender
         }) }}
 
         {{ radio({
           name: 'gender',
           value: 'Any',
-          image: '/assets/images/gender.png'
+          image: '/assets/images/gender.png',
+          checked: values.gender
         }) }}
 
       {% endcall %}
@@ -89,19 +95,22 @@
         {{ radio({
           name: 'attraction',
           value: 'Males',
-          image: '/assets/images/male.png'
+          image: '/assets/images/male.png',
+          checked: values.attraction
         }) }}
 
         {{ radio({
           name: 'attraction',
           value: 'Females',
-          image: '/assets/images/female.png'
+          image: '/assets/images/female.png',
+          checked: values.attraction
         }) }}
 
         {{ radio({
           name: 'attraction',
           value: 'Anyone',
-          image: '/assets/images/gender.png'
+          image: '/assets/images/gender.png',
+          checked: values.attraction
         }) }}
 
       {% endcall %}
@@ -112,11 +121,13 @@
         min: '18',
         max: '99',
         name: 'Age',
-        class: 'form__item--is-visible'
+        class: 'form__item--is-visible',
+        fromAge: values.fromAge,
+        toAge: values.toAge
       }) }}
 
       {% if error %}
-        {{ message({ 
+        {{ message({
           text: error ,
           hook: 'form-error',
           class: errorClass
@@ -135,6 +146,51 @@
         class: 'form__item--is-visible',
         accept: 'image/*'
       }) }}
+
+      {% call locationWrapper({
+        label: 'What is your location? Use your prefered input method',
+        hook: 'location-form',
+        class: 'form__item--is-visible'
+      }) %}
+
+        <div class="form__settings-location-wrapper">
+        {{ button({
+          element: 'button',
+          label: 'Use your personal location',
+          variant: 'secondary',
+          class: 'form__button u--is-hidden',
+          hook: 'geo-api-location'
+        }) }}
+
+        <div>
+        {{ input({
+          name: 'inputLocation',
+          id: 'inputLocation',
+          hook: 'input-location',
+          autofocus: true,
+          class: 'form__item--is-visible display-block no-margin-bottom',
+          maxlength: '50',
+          placeholder: 'Amsterdam',
+          value: values.inputLocation
+        }) }}
+
+        <div class="form__settings-suggestions" js-hook-input-suggestions>
+          {% if locationSuggestions %}
+
+              {% for location in locationSuggestions %}
+
+                {{ radio({
+                  name: 'inputSuggestion',
+                  value: location.woonplaats
+                }) }}
+
+              {% endfor %}
+
+          {% endif %}
+        </div>
+        </div>
+        </div>
+      {% endcall %}
 
       {{ input({
         name: 'song',
@@ -181,7 +237,7 @@
 
   </div>
 
-  {{ button({ 
+  {{ button({
     element: 'button',
     label: 'Next',
     variant: 'secondary',
@@ -190,7 +246,7 @@
     hook: 'next-button'
   }) }}
 
-  {{ button({ 
+  {{ button({
     element: 'button',
     label: 'Submit and start journey',
     variant: 'green',

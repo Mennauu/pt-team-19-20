@@ -40,18 +40,18 @@
 
               {% for person in possibleMatches %}
 
-                {%- if person.id 
-                    and person.avatar 
-                    and person.username 
-                    and person.age
-                    and person.level %}
+                {%- if person.id
+                    and person.avatar
+                    and person.username
+                    and person.age %}
 
                   {{ match({
                     id: person.id,
                     image: person.avatar,
                     username: person.username,
                     age: person.age,
-                    level: person.level,
+                    genre: person.genre,
+                    location: person.location,
                     options: true
                   }) }}
 
@@ -84,10 +84,9 @@
                   id: person.id,
                   image: person.avatar,
                   username: person.username,
-                  age: person.age,
-                  level: person.level
+                  age: person.age
                 }) }}
-              
+
               {% endfor %}
 
             {% else %}

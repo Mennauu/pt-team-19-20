@@ -334,3 +334,14 @@
   top: 50%;
   right: 120%;
 }
+
+.form__range--is-small {
+
+  .range__label {
+    margin: $global-spacing-sm 0;
+  }
+
+  .range__wrapper--gd {
+    margin: $global-spacing-sm 0;
+  }
+}
