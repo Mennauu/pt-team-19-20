@@ -12,6 +12,7 @@ import flash from 'express-flash'
 import session from 'express-session'
 import multer from 'multer'
 import nunjucks from 'nunjucks'
+import rateLimit from 'express-rate-limit'
 
 import { loginFail, loginSucces } from './data/messages.json'
 import auth from './middleware/authentication/auth.js'
@@ -96,6 +97,29 @@ app.use(
   }),
 )
 
+// Create account limit
+const createAccountLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000 * 24, // Time window of 24 hours
+  max: 3, // Limit each ip to 3 requests per windowMS (24 hours)
+  delayMs: 0, // Delaying is disabled - full speed until requests by ip have reached the limit
+  handler: function(req, res) {
+    res.render('error')
+  },
+})
+
+// Log in limit
+const logInLimit = rateLimit({
+  windowMs: 60 * 60 * 1000, // Time window of 1 hour
+  max: 100, // Limit each ip to 100 requests per windowMS (1 hour)
+  delayMs: 0, // Delaying is disabled - full speed until requests by ip have reached the limit
+  handler: function(req, res) {
+    res.render('error')
+  },
+})
+
+// Rate limit on endpoints
+app.use('/register-user', createAccountLimiter)
+
 // GET routes
 app.get('/', route.root)
 app.get('/login', route.login)
@@ -113,6 +137,7 @@ app.post('/remove-match', route.removeMatch)
 app.post('/update-profile', route.updateProfile)
 app.post(
   '/login-authenticate',
+  logInLimit,
   auth.authenticate('local', {
     successRedirect: '/home',
     failureRedirect: '/login',
