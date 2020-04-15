@@ -98,13 +98,13 @@ app.use(
 )
 
 // Create account limit
-const createAccountLimiter = rateLimit({
+export const createAccountLimiter = rateLimit({
   windowMs: 60 * 60 * 1000 * 24, // Time window of 24 hours
   max: 3, // Limit each ip to 3 requests per windowMS (24 hours)
   delayMs: 0, // Delaying is disabled - full speed until requests by ip have reached the limit
-  message: 'You have tried to create to many accounts within a short period of time.', // Error message displayed when ip reaches max limit
 })
 
+// Rate limit on creating accounts
 app.use('/register-user', createAccountLimiter)
 
 // GET routes
