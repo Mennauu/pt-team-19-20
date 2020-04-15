@@ -12,7 +12,6 @@ import flash from 'express-flash'
 import session from 'express-session'
 import multer from 'multer'
 import nunjucks from 'nunjucks'
-import rateLimitStore from '@lykmapipo/rate-limit-mongoose'
 import rateLimit from 'express-rate-limit'
 
 import { loginFail, loginSucces } from './data/messages.json'
@@ -100,24 +99,25 @@ app.use(
 
 // Create account limit
 const createAccountLimiter = rateLimit({
-  store: rateLimitStore, // Store
   windowMs: 60 * 60 * 1000 * 24, // Time window of 24 hours
   max: 3, // Limit each ip to 3 requests per windowMS (24 hours)
   delayMs: 0, // Delaying is disabled - full speed until requests by ip have reached the limit
   message: 'You have tried to create to many accounts within a short period of time.', // Error message displayed when ip reaches max limit
 })
 
+app.use('/register-user', createAccountLimiter)
+
 // GET routes
 app.get('/', route.root)
 app.get('/login', route.login)
 app.get('/logout', route.logout)
-app.get('/register', route.register, createAccountLimiter)
+app.get('/register', route.register)
 app.get('/home', route.home)
 app.get('/:id', route.profile)
 app.get('*', route.error)
 
 // POST routes
-app.post('/register-user', createAccountLimiter, route.registerUser)
+app.post('/register-user', route.registerUser)
 app.post('/user-settings', upload.single('avatar'), route.userSettings)
 app.post('/user-matches', route.userMatches)
 app.post('/remove-match', route.removeMatch)
