@@ -4,14 +4,14 @@
 
 <h1 align="center">Project Tech Course @cmda-bt 19-20</h1>
 
-<p align="center"><b>[Description of our Project]</b>
+<p align="center"><b>Get together on Festivibe</b>
 </p>
 
 <br>
 
 <p align="center">
-  <a href="#">
-    <img src="https://img.shields.io/badge/demo-offline-red.svg?style=flat-square" alt="Demo">
+  <a href="https://project-tech-team.herokuapp.com/">
+    <img src="https://img.shields.io/badge/demo-online-green.svg?style=flat-square" alt="Demo">
   </a>
   &nbsp;&nbsp;&nbsp;
   <a href="https://choosealicense.com/licenses/gpl-3.0/">
@@ -22,7 +22,9 @@
 <br>
 
 <p align="center">
-  [... Image of project]
+
+![Festivibe](festivibe.png)
+
 </p>
 
 <br>
@@ -126,7 +128,6 @@ npm run dev
 
 </details>
 
-
 ## Stack
 
 <details>
@@ -140,7 +141,7 @@ HTMLovers is created using mainly [HTML](https://developer.mozilla.org/nl/docs/W
 
 ### Templating
 
-[Nunjucks](https://mozilla.github.io/nunjucks/) is used as a templating engine to render HTML. Nunjucks has been chosen for its easy way of creating macro's, so building component based views is made better, cleaner, easier and above all, more readable. 
+[Nunjucks](https://mozilla.github.io/nunjucks/) is used as a templating engine to render HTML. Nunjucks has been chosen for its easy way of creating macro's, so building component based views is made better, cleaner, easier and above all, more readable.
 
 #### Views
 
@@ -168,13 +169,13 @@ One default layout has been created for every page on the website. The content f
 </html>
 ```
 
-When you want to inject content into the 'block' you have to extend the layout. You can do that like this: 
+When you want to inject content into the 'block' you have to extend the layout. You can do that like this:
 
 ```
 {% extends 'default.html' %}
 
 {% block content %}
-  
+
 {% endblock %}
 ```
 
@@ -188,7 +189,7 @@ For instance, this might be how your `home.html` looks.
 
 {% block content %}
 
-  {% call card({ 
+  {% call card({
     shadow: true ,
     title: 'Hello, this is just an example'
   }) %}
@@ -203,9 +204,9 @@ For instance, this might be how your `home.html` looks.
 {% endblock %}
 ```
 
-
 #### Components
-As you might have seen in the `views` sections, I'm not actually writing any HTML. I'm calling elements like a header, card and image and providing them information. How does that work? Check out the "notification" component underneath, written as a macro. 
+
+As you might have seen in the `views` sections, I'm not actually writing any HTML. I'm calling elements like a header, card and image and providing them information. How does that work? Check out the "notification" component underneath, written as a macro.
 
 ```HTML
 {% macro notification(data) %}
@@ -234,10 +235,14 @@ In our view template we can now easily call the macro by importing it like this 
 Afterwards, we can call the macro within our view.
 
 ```javascript
- {{ notification({ 
-   message: 'This is a message', 
-   class: 'notification__test' 
- }) }}
+{
+  {
+    notification({
+      message: 'This is a message',
+      class: 'notification__test',
+    })
+  }
+}
 ```
 
 Now if we don't want to render a class, we can just leave it empty or not mention it at all. The if statement within the macro will be false.
@@ -256,7 +261,7 @@ Building components/macros like this makes them reusable. You can reuse them any
 
 [SASS](https://sass-lang.com/) has been used for styling. It's full of features and actually makes your CSS richer. It's also faster to write SCSS than regular CSS, especially when working component based. The main reason for using SASS over other CSS extensions (or writing regular CSS) is the ability to write variables, functions, and mixins.
 
-Let's take a look again at the `notification` component. It has a SCSS file named _notification.scss. The underscore is a partial for SCSS. It basically means that the file is going to be imported to a `main` stylesheet, in my case `main.scss`. The advantage of using partials is that you can use many files to organize your code and everything will be compiled within a single file. Back to the notifcation..
+Let's take a look again at the `notification` component. It has a SCSS file named \_notification.scss. The underscore is a partial for SCSS. It basically means that the file is going to be imported to a `main` stylesheet, in my case `main.scss`. The advantage of using partials is that you can use many files to organize your code and everything will be compiled within a single file. Back to the notifcation..
 
 <details>
   <summary>Show me your _notication.scss file!</summary>
@@ -320,6 +325,7 @@ Variables like `$global-spacing` and `$color-red` are globally defined variables
 All SCSS files are eventually compiled to one css file, which is compressed, revisioned, and minified, on save or build. More about that later!
 
 ### JavaScript
+
 All JavaScript (files) being used are imported in a `main-es.js` file, like this:
 
 ```JavaScript
@@ -362,10 +368,11 @@ const JS_HOOK_INPUT_USERNAME = '[js-hook-input-username]'
 ```
 
 To be able to find the element I can now do something in the likes of this
+
 ```javascript
 const inputUsername = document.querySelector(JS_HOOK_INPUT_USERNAME)
 
-// Maybe I'm calling a input inside a form that's been called by ModuleInit? 
+// Maybe I'm calling a input inside a form that's been called by ModuleInit?
 // We can find an element by adding the line underneath in the constructor.
 this.inputUsername = element.querySelector(JS_HOOK_INPUT_USERNAME)
 ```
@@ -384,6 +391,7 @@ _Disclaimer: passwords are hashed with [bcrypt](https://www.npmjs.com/package/bc
   <summary>Show me the database connection setup and user schema</summary>
 
 #### Database connect
+
 ```javascript
 class Database {
   constructor() {
@@ -397,6 +405,7 @@ class Database {
 ```
 
 #### Database user schema
+
 ```JavaScript
 const userSchema = new mongoose.Schema({
   username: String,
@@ -416,17 +425,18 @@ const userSchema = new mongoose.Schema({
   matched: [],
 })
 ```
+
 </details>
 
 #### Table example
 
-| _id `objectId` |  images `array` | liked `array` | disliked `array` | matched `array` | username `string` | password `string` | firstVisit `boolean` | age `int` | gender `string` | level `string` | name `string` | avatar `string` | attraction `string` | fromAge `int` | toAge `int` |
-|----------------|----------------|---------------|------------------|-----------------|-------------------|-------------------|----------------------|-----------|-----------------|----------------|---------------|-----------------|---------------------|---------------|-------------|
-| 5e6e3ecff612c0090673b274 | []               | ['5e6e3ecff612c0090673b274', '5e6e3ecff612c0090673b2cb'] | []               | []              | 'Baas'            | '$2a$10$0BHov9rtizAHGoRHV2gu6.UKmMBzG4hN3GjARcYvZvmyiFqG7bWIK' | False                | 25        | 'Male'          | 'God'          | 'Menno'       | 'assets/uploads/9042463f4413e9761549565dff25b331' | 'Females'           | 18            | 30          |
+| \_id `objectId`          | images `array` | liked `array`                                            | disliked `array` | matched `array` | username `string` | password `string`                                               | firstVisit `boolean` | age `int` | gender `string` | level `string` | name `string` | avatar `string`                                   | attraction `string` | fromAge `int` | toAge `int` |
+| ------------------------ | -------------- | -------------------------------------------------------- | ---------------- | --------------- | ----------------- | --------------------------------------------------------------- | -------------------- | --------- | --------------- | -------------- | ------------- | ------------------------------------------------- | ------------------- | ------------- | ----------- |
+| 5e6e3ecff612c0090673b274 | []             | ['5e6e3ecff612c0090673b274', '5e6e3ecff612c0090673b2cb'] | []               | []              | 'Baas'            | '$2a$10\$0BHov9rtizAHGoRHV2gu6.UKmMBzG4hN3GjARcYvZvmyiFqG7bWIK' | False                | 25        | 'Male'          | 'God'          | 'Menno'       | 'assets/uploads/9042463f4413e9761549565dff25b331' | 'Females'           | 18            | 30          |
 
 ### Authentication
 
-For authentication and user sessions [Passport](http://www.passportjs.org/) has been used. Passport is an authenticaton middleware. 
+For authentication and user sessions [Passport](http://www.passportjs.org/) has been used. Passport is an authenticaton middleware.
 
 Passport is used because it serves one purpose: authentication. It has been fully optimized for authentication through a username and password, which is what we use to authenticate. Passport keeps your code clean and maintainable.
 
@@ -622,6 +632,7 @@ trim_trailing_whitespace = false
 ### Setup and Build
 
 #### Setup
+
 [Express](https://www.npmjs.com/package/express) for the server. It's one of the best frameworks for node. [ESM](https://www.npmjs.com/package/esm) is also included. ESM is a ECMAScript module loader and it allows you to write imports like this:
 
 ```JavaScript
@@ -683,7 +694,6 @@ The above doesn't work for SVG's, since SVG's are practically HTML. So we run a 
 
 [svgo](https://www.npmjs.com/package/svgo) will optimize and minify SVG's.
 
-
 #### CSS
 
 Firstly, `scss` files had to be imported one by one in the `main.scss` file and I didn't like that. So I used [Node Sass Glob Importer](https://www.npmjs.com/package/node-sass-glob-importer) so I could use glob syntax in scss imports. This basically means you can inject any scss file from a given route, like shown underneath. This way you never have to even think of importing a file, it's done automatically.
@@ -703,7 +713,7 @@ Firstly, `scss` files had to be imported one by one in the `main.scss` file and 
 
 Also when using Sass, you have to compile it to CSS in order for the browser to able to read it. For that I used [Node Sass](https://www.npmjs.com/package/node-sass). Node Sass also has a build in compression as an option, which minifies the file.
 
-In my `package.json` I created a command named `build-css` like this: 
+In my `package.json` I created a command named `build-css` like this:
 
 ```JSON
 "build-css": "node-sass --importer node_modules/node-sass-glob-importer/dist/cli.js server/assets/sass/main.scss build/assets/css/styles.min.css --output-style compressed && npm run prefix-css"
@@ -739,18 +749,19 @@ In order to do this I run this commmand:
 ```
 
 Problem with that is, if you save again it will add a new object like this, and the old one will remain, since the file doesn't get deleted.
+
 ```
 {
   "styles-d41d8cd98f.min.css": "styles-fev5dfve34.min.css"
   "styles.min.css": "styles-d41d8cd98f.min.css"
 }
 ```
+
 We use [gulp-rev-delete-original](https://www.npmjs.com/package/gulp-rev-delete-original) in order to solve this problem. It will delete the original rewritten file.
 
 Now that the file is being revisioned perfectly, we have to replace the filename in the HTML. In order to do that we use [gulp-rev-replace](https://www.npmjs.com/package/gulp-rev-replace). It rewrite occurrences of filenames which have been renamed by gulp-rev by looking at the `rev-manifest.json` file.
 
 Combining all the tasks together it looks like this:
-
 
 ```JavaScript
 gulp.task('revision-css', () => {
@@ -869,7 +880,6 @@ With JavaScript we do the same revisioning and filename replacement as we did fo
 
 - [ ] More to add
 - [x] This is done
-
 
 ## Credits
 
